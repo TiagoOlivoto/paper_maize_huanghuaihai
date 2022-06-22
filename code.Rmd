@@ -1,0 +1,35 @@
+% Analysis 
+
+```{r global_options, include = FALSE}
+knitr::opts_chunk$set(cache = TRUE, comment = "##", collapse = TRUE)
+
+```
+
+\renewcommand{\figurename}{Fig. S}
+
+# Libraries
+
+To reproduce the examples of this material, the R packages the following packages are needed.
+
+```{r warning=FALSE, message=FALSE}
+
+library(tidyverse)
+library(EnvRtype)
+library(metan)
+library(rio)
+library(factoextra)
+library(FactoMineR)
+library(ggrepel)
+library(ggh4x)
+library(superheat)
+library(ggridges)
+
+```
+
+
+# Dataset
+
+
+
+
+

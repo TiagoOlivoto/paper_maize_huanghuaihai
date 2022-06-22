@@ -1,0 +1,21 @@
+% Supplementary figures 
+
+```{r global_options, include = FALSE}
+knitr::opts_chunk$set(cache = TRUE, comment = "##", collapse = TRUE)
+xaringanExtra::use_panelset()
+```
+
+
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+library(metan)      # MGIDI index
+library(rio)        # data importation
+library(tidyverse)  # plots, data manipulation
+
+```
+
+# Traits with negative desired gains {.panelset}
+
+
+# Traits with positive desired gains {.panelset}
+

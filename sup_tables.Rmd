@@ -1,0 +1,25 @@
+% Supplementary tables 
+
+```{r global_options, include = FALSE}
+knitr::opts_chunk$set(cache = TRUE, comment = "##", collapse = TRUE)
+
+```
+
+
+```{r  warning=FALSE, message=FALSE, include=FALSE}
+library(metan)      # MGIDI index
+library(rio)        # data importation
+library(broom)      # convert statistical objects into tidy tibbles
+library(purrr)      # Manipulate lists
+library(tidyverse)  # plots, data manipulation
+library(kableExtra) # html tables
+library(emmeans)    # pairwise multiple comparison
+library(ExpDes)     # pairwise multiple comparison
+
+```
+
+
+
+
+
+
