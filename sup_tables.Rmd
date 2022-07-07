@@ -1,25 +1,112 @@
-% Supplementary tables 
+% Supplementary figures 
+
 
 ```{r global_options, include = FALSE}
-knitr::opts_chunk$set(cache = TRUE, comment = "##", collapse = TRUE)
-
-```
-
-
-```{r  warning=FALSE, message=FALSE, include=FALSE}
-library(metan)      # MGIDI index
-library(rio)        # data importation
-library(broom)      # convert statistical objects into tidy tibbles
-library(purrr)      # Manipulate lists
-library(tidyverse)  # plots, data manipulation
-library(kableExtra) # html tables
-library(emmeans)    # pairwise multiple comparison
-library(ExpDes)     # pairwise multiple comparison
+knitr::opts_chunk$set(cache = TRUE,
+                      comment = "##",
+                      collapse = TRUE,
+                      warning = FALSE,
+                      message = FALSE)
 
 ```
 
 
 
+```{r warning=FALSE, message=FALSE, echo=FALSE}
+library(rio)
+library(tidyverse)
+library(metan)
+library(kableExtra)
+
+my_theme <- 
+  theme_bw() +
+  theme(panel.spacing = unit(0, "cm"),
+        panel.grid = element_blank(),
+        legend.position = "bottom")
+```
 
 
 
+```{r  warning=FALSE, message=FALSE, echo=FALSE}
+
+print_table = function(df,
+                       caption,
+                       digits = 2,
+                       full_width = TRUE,
+                       col.names = NA,
+                       longtable = FALSE,
+                       scape = FALSE,
+                       html_opt = c("striped", "responsive")){
+  kable(df,
+        align  = "l",
+        col.names = col.names,
+        booktabs = T,
+        digits = digits,
+        format = "html",
+        linesep = "",
+        caption = caption,
+        escape = scape,
+        longtable = longtable) %>%
+    kable_classic(lightable_options = "striped", html_font = "sans", full_width = full_width) %>% 
+    kable_styling(bootstrap_options = html_opt)
+}
+
+```
+
+
+```{r echo=FALSE}
+# Include a column to mega-environment
+df_traits <-
+  import("https://bit.ly/df_traits") |> 
+  metan::as_factor(1:3)
+#  
+me2 <- c("YC2020", "SX2020", "JS2020", "NY2020")
+me3 <- c("GC2020", "SZ2020", "JN2020", "LZ2020")
+me1 <- set_difference(as.character(unique(df_traits$ENV)), me2, me3)
+
+df_traits <- 
+  df_traits |> 
+  mutate(me = case_when(ENV %in% me1 ~ "ME1",
+                        ENV %in% me2 ~ "ME2",
+                        ENV %in% me3 ~ "ME3"))
+
+```
+
+
+
+```{r echo=FALSE}
+mod_global <- readRDS("data/mod_global.RData")
+## mtsi global
+SI <- 25
+mtsi_global <- mtsi(mod_global, SI = SI, verbose = FALSE)
+sel_gen <- mtsi_global$sel_gen
+```
+
+
+
+```{r echo=FALSE}
+mod_me <- readRDS("data/mod_me.RData")
+## mtsi me1
+mtsi_me1 <- mtsi(mod_me$data[[1]], SI = SI, verbose = FALSE)
+## mtsi me2
+mtsi_me2 <- mtsi(mod_me$data[[2]], SI = SI, verbose = FALSE)
+## mtsi me3
+mtsi_me3 <- mtsi(mod_me$data[[3]], SI = SI, verbose = FALSE)
+```
+
+
+
+# factor loadings
+```{r echo=FALSE}
+models <- 
+  list(
+ME1 = gmd(mtsi_me1, "FA"),
+ME2 = gmd(mtsi_me2, "FA"),
+ME3 = gmd(mtsi_me3, "FA")
+  )
+
+bind_rows(models, .id = "model") |> 
+  print_table(caption = "Facot loadings")
+
+
+```
