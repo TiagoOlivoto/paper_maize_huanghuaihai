@@ -518,6 +518,16 @@ mtsi_me3 <- mtsi(mod_me$data[[3]], SI = SI)
 
 ```
 
+## Proportion of the phenotypic variance
+```{r}
+vc1 <- plot(mod_me$data[[1]], type = "vcomp")
+vc2 <- plot(mod_me$data[[2]], type = "vcomp")
+vc3 <- plot(mod_me$data[[3]], type = "vcomp")
+arrange_ggplot(vc1, vc2, vc3,
+               guides = "collect",
+               tag_levels = "a")
+ggsave("figs/fig7_vcomp.pdf", width = 15, height = 5)
+```
 
 
 ## Selected genotypes in each ME
@@ -694,7 +704,7 @@ ggsave("figs/fig11_waasb_y_biplot.pdf", width = 12, height = 6)
 ```
 
 
-# System
+# Section info
 ```{r}
 sessionInfo()
 ```

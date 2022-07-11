@@ -289,12 +289,13 @@
       <li><a href="#mixed-model"><span class="toc-section-number">3.7.1</span> Mixed model</a></li>
       <li><a href="#multi-trait-stability-index"><span class="toc-section-number">3.7.2</span> Multi-trait stability index</a></li>
       </ul></li>
-      <li><a href="#selected-genotypes-in-each-me"><span class="toc-section-number">3.8</span> Selected genotypes in each ME</a></li>
-      <li><a href="#selection-gains-for-mean-performance"><span class="toc-section-number">3.9</span> Selection gains for mean performance</a></li>
-      <li><a href="#pc1-x-pc2"><span class="toc-section-number">3.10</span> PC1 x PC2</a></li>
-      <li><a href="#waasb-x-y-biplot"><span class="toc-section-number">3.11</span> WAASB X Y biplot</a></li>
+      <li><a href="#proportion-of-the-phenotypic-variance"><span class="toc-section-number">3.8</span> Proportion of the phenotypic variance</a></li>
+      <li><a href="#selected-genotypes-in-each-me"><span class="toc-section-number">3.9</span> Selected genotypes in each ME</a></li>
+      <li><a href="#selection-gains-for-mean-performance"><span class="toc-section-number">3.10</span> Selection gains for mean performance</a></li>
+      <li><a href="#pc1-x-pc2"><span class="toc-section-number">3.11</span> PC1 x PC2</a></li>
+      <li><a href="#waasb-x-y-biplot"><span class="toc-section-number">3.12</span> WAASB X Y biplot</a></li>
       </ul></li>
-      <li><a href="#system"><span class="toc-section-number">4</span> System</a></li>
+      <li><a href="#section-info"><span class="toc-section-number">4</span> Section info</a></li>
       </ul>
     </div>
     <div id="postamble" data-toggle="wy-nav-shift" class="status">
@@ -973,265 +974,272 @@ Figure 3.6: Quantiles for deficit by precipitation observed in the studied envir
 <span id="cb18-212"><a href="#cb18-212" aria-hidden="true" tabindex="-1"></a><span class="do">## -------------------------------------------------------------------------------</span></span></code></pre></div>
 </div>
 </div>
-<div id="selected-genotypes-in-each-me" class="section level2" number="3.8">
-<h2><span class="header-section-number">3.8</span> Selected genotypes in each ME</h2>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>ALL <span class="ot">&lt;-</span> mtsi_global<span class="sc">$</span>sel_gen</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>ME1 <span class="ot">&lt;-</span> mtsi_me1<span class="sc">$</span>sel_gen</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>ME2 <span class="ot">&lt;-</span> mtsi_me2<span class="sc">$</span>sel_gen</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>ME3 <span class="ot">&lt;-</span> mtsi_me3<span class="sc">$</span>sel_gen</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="fu">venn_plot</span>(ALL, ME1, ME2, ME3, <span class="at">show_elements =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-19"></span>
-<img src="code_files/figure-html/unnamed-chunk-19-1.png" alt="selected genotypes" width="768" />
+<div id="proportion-of-the-phenotypic-variance" class="section level2" number="3.8">
+<h2><span class="header-section-number">3.8</span> Proportion of the phenotypic variance</h2>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>vc1 <span class="ot">&lt;-</span> <span class="fu">plot</span>(mod_me<span class="sc">$</span>data[[<span class="dv">1</span>]], <span class="at">type =</span> <span class="st">&quot;vcomp&quot;</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>vc2 <span class="ot">&lt;-</span> <span class="fu">plot</span>(mod_me<span class="sc">$</span>data[[<span class="dv">2</span>]], <span class="at">type =</span> <span class="st">&quot;vcomp&quot;</span>)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>vc3 <span class="ot">&lt;-</span> <span class="fu">plot</span>(mod_me<span class="sc">$</span>data[[<span class="dv">3</span>]], <span class="at">type =</span> <span class="st">&quot;vcomp&quot;</span>)</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="fu">arrange_ggplot</span>(vc1, vc2, vc3,</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">guides =</span> <span class="st">&quot;collect&quot;</span>,</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">tag_levels =</span> <span class="st">&quot;a&quot;</span>)</span></code></pre></div>
+<p><img src="code_files/figure-html/unnamed-chunk-19-1.png" width="768" /></p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;figs/fig7_vcomp.pdf&quot;</span>, <span class="at">width =</span> <span class="dv">15</span>, <span class="at">height =</span> <span class="dv">5</span>)</span></code></pre></div>
+</div>
+<div id="selected-genotypes-in-each-me" class="section level2" number="3.9">
+<h2><span class="header-section-number">3.9</span> Selected genotypes in each ME</h2>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>ALL <span class="ot">&lt;-</span> mtsi_global<span class="sc">$</span>sel_gen</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>ME1 <span class="ot">&lt;-</span> mtsi_me1<span class="sc">$</span>sel_gen</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>ME2 <span class="ot">&lt;-</span> mtsi_me2<span class="sc">$</span>sel_gen</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>ME3 <span class="ot">&lt;-</span> mtsi_me3<span class="sc">$</span>sel_gen</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="fu">venn_plot</span>(ALL, ME1, ME2, ME3, <span class="at">show_elements =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-20"></span>
+<img src="code_files/figure-html/unnamed-chunk-20-1.png" alt="selected genotypes" width="768" />
 <p class="caption">
 Figure 3.7: selected genotypes
 </p>
 </div>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;figs/fig8_venn.pdf&quot;</span>, <span class="at">width =</span> <span class="dv">5</span>, <span class="at">height =</span> <span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;figs/fig8_venn.pdf&quot;</span>, <span class="at">width =</span> <span class="dv">5</span>, <span class="at">height =</span> <span class="dv">5</span>)</span></code></pre></div>
 </div>
-<div id="selection-gains-for-mean-performance" class="section level2" number="3.9">
-<h2><span class="header-section-number">3.9</span> Selection gains for mean performance</h2>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>sd_trait_global <span class="ot">&lt;-</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  mtsi_global<span class="sc">$</span>sel_dif_trait <span class="sc">%&gt;%</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select_cols</span>(VAR, sense, Xo, SDperc)</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>sd_me1 <span class="ot">&lt;-</span> </span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  mtsi_me1<span class="sc">$</span>sel_dif_trait <span class="sc">|&gt;</span> </span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select_cols</span>(VAR, SDperc) <span class="sc">|&gt;</span> </span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">SD_me1 =</span> SDperc)</span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>sd_me2 <span class="ot">&lt;-</span> </span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>  mtsi_me2<span class="sc">$</span>sel_dif_trait <span class="sc">|&gt;</span> </span>
-<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select_cols</span>(VAR, SDperc) <span class="sc">|&gt;</span> </span>
-<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">SD_me2 =</span> SDperc)</span>
-<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>sd_me3 <span class="ot">&lt;-</span> </span>
-<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>  mtsi_me3<span class="sc">$</span>sel_dif_trait <span class="sc">|&gt;</span> </span>
-<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select_cols</span>(VAR, SDperc) <span class="sc">|&gt;</span> </span>
-<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">SD_me3 =</span> SDperc)</span>
-<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>sel_gain_joint <span class="ot">&lt;-</span></span>
-<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a>  sd_trait_global <span class="sc">|&gt;</span></span>
-<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">SD_ALL =</span> SDperc) <span class="sc">|&gt;</span></span>
-<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(sd_me1) <span class="sc">|&gt;</span></span>
-<span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(sd_me2) <span class="sc">|&gt;</span> </span>
-<span id="cb21-26"><a href="#cb21-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(sd_me3)</span>
-<span id="cb21-27"><a href="#cb21-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-28"><a href="#cb21-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-29"><a href="#cb21-29" aria-hidden="true" tabindex="-1"></a>df_gains <span class="ot">&lt;-</span></span>
-<span id="cb21-30"><a href="#cb21-30" aria-hidden="true" tabindex="-1"></a>  sel_gain_joint <span class="sc">|&gt;</span></span>
-<span id="cb21-31"><a href="#cb21-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">remove_cols</span>(Xo) <span class="sc">|&gt;</span></span>
-<span id="cb21-32"><a href="#cb21-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(SD_ALL<span class="sc">:</span>SD_me3) <span class="sc">|&gt;</span></span>
-<span id="cb21-33"><a href="#cb21-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">replace_string</span>(sense,</span>
-<span id="cb21-34"><a href="#cb21-34" aria-hidden="true" tabindex="-1"></a>                 <span class="at">pattern =</span> <span class="st">&quot;increase&quot;</span>,</span>
-<span id="cb21-35"><a href="#cb21-35" aria-hidden="true" tabindex="-1"></a>                 <span class="at">replacement =</span> <span class="st">&quot;Positive desired gains&quot;</span>) <span class="sc">|&gt;</span></span>
-<span id="cb21-36"><a href="#cb21-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">replace_string</span>(sense,</span>
-<span id="cb21-37"><a href="#cb21-37" aria-hidden="true" tabindex="-1"></a>                 <span class="at">pattern =</span> <span class="st">&quot;decrease&quot;</span>,</span>
-<span id="cb21-38"><a href="#cb21-38" aria-hidden="true" tabindex="-1"></a>                 <span class="at">replacement =</span> <span class="st">&quot;Negative desired gains&quot;</span>) <span class="sc">|&gt;</span></span>
-<span id="cb21-39"><a href="#cb21-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">negative =</span> <span class="fu">ifelse</span>(value <span class="sc">&lt;=</span> <span class="dv">0</span>, <span class="st">&quot;Negative&quot;</span>, <span class="st">&quot;Positive&quot;</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb21-40"><a href="#cb21-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">replace_string</span>(name, <span class="at">pattern =</span> <span class="st">&quot;SD_&quot;</span>, <span class="at">replacement =</span> <span class="st">&quot;&quot;</span>) <span class="sc">|&gt;</span></span>
-<span id="cb21-41"><a href="#cb21-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy_strings</span>(name, <span class="at">sep =</span> <span class="st">&quot;&quot;</span>)</span>
-<span id="cb21-42"><a href="#cb21-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-43"><a href="#cb21-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-44"><a href="#cb21-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-45"><a href="#cb21-45" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_gains, <span class="fu">aes</span>(name, value)) <span class="sc">+</span></span>
-<span id="cb21-46"><a href="#cb21-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">size =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
-<span id="cb21-47"><a href="#cb21-47" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="fu">aes</span>(<span class="at">fill =</span> negative),</span>
-<span id="cb21-48"><a href="#cb21-48" aria-hidden="true" tabindex="-1"></a>           <span class="at">col =</span> <span class="st">&quot;black&quot;</span>,</span>
-<span id="cb21-49"><a href="#cb21-49" aria-hidden="true" tabindex="-1"></a>           <span class="at">size =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
-<span id="cb21-50"><a href="#cb21-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fl">0.1</span>)) <span class="sc">+</span></span>
-<span id="cb21-51"><a href="#cb21-51" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_nested</span>(<span class="sc">~</span>sense <span class="sc">+</span> VAR) <span class="sc">+</span></span>
-<span id="cb21-52"><a href="#cb21-52" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">round</span>(value, <span class="dv">2</span>),</span>
-<span id="cb21-53"><a href="#cb21-53" aria-hidden="true" tabindex="-1"></a>                <span class="at">hjust =</span> <span class="fu">ifelse</span>(value <span class="sc">&gt;</span> <span class="dv">0</span>, <span class="sc">-</span><span class="fl">0.1</span>, <span class="fl">1.1</span>),</span>
-<span id="cb21-54"><a href="#cb21-54" aria-hidden="true" tabindex="-1"></a>                <span class="at">angle =</span> <span class="dv">90</span>),</span>
-<span id="cb21-55"><a href="#cb21-55" aria-hidden="true" tabindex="-1"></a>            <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb21-56"><a href="#cb21-56" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Selection strategy&quot;</span>,</span>
-<span id="cb21-57"><a href="#cb21-57" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Selection differential (%)&quot;</span>) <span class="sc">+</span></span>
-<span id="cb21-58"><a href="#cb21-58" aria-hidden="true" tabindex="-1"></a>  my_theme <span class="sc">+</span></span>
-<span id="cb21-59"><a href="#cb21-59" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>,</span>
-<span id="cb21-60"><a href="#cb21-60" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb21-61"><a href="#cb21-61" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb21-62"><a href="#cb21-62" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span></code></pre></div>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-20"></span>
-<img src="code_files/figure-html/unnamed-chunk-20-1.png" alt="Selection gains for mean performance" width="768" />
+<div id="selection-gains-for-mean-performance" class="section level2" number="3.10">
+<h2><span class="header-section-number">3.10</span> Selection gains for mean performance</h2>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>sd_trait_global <span class="ot">&lt;-</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  mtsi_global<span class="sc">$</span>sel_dif_trait <span class="sc">%&gt;%</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select_cols</span>(VAR, sense, Xo, SDperc)</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>sd_me1 <span class="ot">&lt;-</span> </span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  mtsi_me1<span class="sc">$</span>sel_dif_trait <span class="sc">|&gt;</span> </span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select_cols</span>(VAR, SDperc) <span class="sc">|&gt;</span> </span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">SD_me1 =</span> SDperc)</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>sd_me2 <span class="ot">&lt;-</span> </span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>  mtsi_me2<span class="sc">$</span>sel_dif_trait <span class="sc">|&gt;</span> </span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select_cols</span>(VAR, SDperc) <span class="sc">|&gt;</span> </span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">SD_me2 =</span> SDperc)</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>sd_me3 <span class="ot">&lt;-</span> </span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>  mtsi_me3<span class="sc">$</span>sel_dif_trait <span class="sc">|&gt;</span> </span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select_cols</span>(VAR, SDperc) <span class="sc">|&gt;</span> </span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">SD_me3 =</span> SDperc)</span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>sel_gain_joint <span class="ot">&lt;-</span></span>
+<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a>  sd_trait_global <span class="sc">|&gt;</span></span>
+<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">SD_ALL =</span> SDperc) <span class="sc">|&gt;</span></span>
+<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(sd_me1) <span class="sc">|&gt;</span></span>
+<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(sd_me2) <span class="sc">|&gt;</span> </span>
+<span id="cb23-26"><a href="#cb23-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(sd_me3)</span>
+<span id="cb23-27"><a href="#cb23-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-28"><a href="#cb23-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-29"><a href="#cb23-29" aria-hidden="true" tabindex="-1"></a>df_gains <span class="ot">&lt;-</span></span>
+<span id="cb23-30"><a href="#cb23-30" aria-hidden="true" tabindex="-1"></a>  sel_gain_joint <span class="sc">|&gt;</span></span>
+<span id="cb23-31"><a href="#cb23-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">remove_cols</span>(Xo) <span class="sc">|&gt;</span></span>
+<span id="cb23-32"><a href="#cb23-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(SD_ALL<span class="sc">:</span>SD_me3) <span class="sc">|&gt;</span></span>
+<span id="cb23-33"><a href="#cb23-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">replace_string</span>(sense,</span>
+<span id="cb23-34"><a href="#cb23-34" aria-hidden="true" tabindex="-1"></a>                 <span class="at">pattern =</span> <span class="st">&quot;increase&quot;</span>,</span>
+<span id="cb23-35"><a href="#cb23-35" aria-hidden="true" tabindex="-1"></a>                 <span class="at">replacement =</span> <span class="st">&quot;Positive desired gains&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb23-36"><a href="#cb23-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">replace_string</span>(sense,</span>
+<span id="cb23-37"><a href="#cb23-37" aria-hidden="true" tabindex="-1"></a>                 <span class="at">pattern =</span> <span class="st">&quot;decrease&quot;</span>,</span>
+<span id="cb23-38"><a href="#cb23-38" aria-hidden="true" tabindex="-1"></a>                 <span class="at">replacement =</span> <span class="st">&quot;Negative desired gains&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb23-39"><a href="#cb23-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">negative =</span> <span class="fu">ifelse</span>(value <span class="sc">&lt;=</span> <span class="dv">0</span>, <span class="st">&quot;Negative&quot;</span>, <span class="st">&quot;Positive&quot;</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb23-40"><a href="#cb23-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">replace_string</span>(name, <span class="at">pattern =</span> <span class="st">&quot;SD_&quot;</span>, <span class="at">replacement =</span> <span class="st">&quot;&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb23-41"><a href="#cb23-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy_strings</span>(name, <span class="at">sep =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb23-42"><a href="#cb23-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-43"><a href="#cb23-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-44"><a href="#cb23-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-45"><a href="#cb23-45" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_gains, <span class="fu">aes</span>(name, value)) <span class="sc">+</span></span>
+<span id="cb23-46"><a href="#cb23-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">size =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb23-47"><a href="#cb23-47" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="fu">aes</span>(<span class="at">fill =</span> negative),</span>
+<span id="cb23-48"><a href="#cb23-48" aria-hidden="true" tabindex="-1"></a>           <span class="at">col =</span> <span class="st">&quot;black&quot;</span>,</span>
+<span id="cb23-49"><a href="#cb23-49" aria-hidden="true" tabindex="-1"></a>           <span class="at">size =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb23-50"><a href="#cb23-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fl">0.1</span>)) <span class="sc">+</span></span>
+<span id="cb23-51"><a href="#cb23-51" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_nested</span>(<span class="sc">~</span>sense <span class="sc">+</span> VAR) <span class="sc">+</span></span>
+<span id="cb23-52"><a href="#cb23-52" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">round</span>(value, <span class="dv">2</span>),</span>
+<span id="cb23-53"><a href="#cb23-53" aria-hidden="true" tabindex="-1"></a>                <span class="at">hjust =</span> <span class="fu">ifelse</span>(value <span class="sc">&gt;</span> <span class="dv">0</span>, <span class="sc">-</span><span class="fl">0.1</span>, <span class="fl">1.1</span>),</span>
+<span id="cb23-54"><a href="#cb23-54" aria-hidden="true" tabindex="-1"></a>                <span class="at">angle =</span> <span class="dv">90</span>),</span>
+<span id="cb23-55"><a href="#cb23-55" aria-hidden="true" tabindex="-1"></a>            <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb23-56"><a href="#cb23-56" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Selection strategy&quot;</span>,</span>
+<span id="cb23-57"><a href="#cb23-57" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Selection differential (%)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb23-58"><a href="#cb23-58" aria-hidden="true" tabindex="-1"></a>  my_theme <span class="sc">+</span></span>
+<span id="cb23-59"><a href="#cb23-59" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>,</span>
+<span id="cb23-60"><a href="#cb23-60" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb23-61"><a href="#cb23-61" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb23-62"><a href="#cb23-62" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-21"></span>
+<img src="code_files/figure-html/unnamed-chunk-21-1.png" alt="Selection gains for mean performance" width="768" />
 <p class="caption">
 Figure 3.8: Selection gains for mean performance
 </p>
 </div>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;figs/fig9_sd_mper.pdf&quot;</span>, <span class="at">width =</span> <span class="dv">10</span>, <span class="at">height =</span> <span class="dv">5</span>)</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="co"># mean of differentials by each stragety</span></span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>df_gains <span class="sc">|&gt;</span> </span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">strategy =</span> <span class="fu">ifelse</span>(name <span class="sc">==</span> <span class="st">&quot;ALL&quot;</span>, <span class="st">&quot;All&quot;</span>, <span class="st">&quot;Mega-environment&quot;</span>)) <span class="sc">|&gt;</span> <span class="fu">means_by</span>(strategy, negative)</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;figs/fig9_sd_mper.pdf&quot;</span>, <span class="at">width =</span> <span class="dv">10</span>, <span class="at">height =</span> <span class="dv">5</span>)</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="co"># mean of differentials by each stragety</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>df_gains <span class="sc">|&gt;</span> </span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">strategy =</span> <span class="fu">ifelse</span>(name <span class="sc">==</span> <span class="st">&quot;ALL&quot;</span>, <span class="st">&quot;All&quot;</span>, <span class="st">&quot;Mega-environment&quot;</span>)) <span class="sc">|&gt;</span> <span class="fu">means_by</span>(strategy, negative)</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["strategy"],"name":[1],"type":["chr"],"align":["left"]},{"label":["negative"],"name":[2],"type":["chr"],"align":["left"]},{"label":["value"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"All","2":"Negative","3":"-2.618672"},{"1":"All","2":"Positive","3":"1.742275"},{"1":"Mega-environment","2":"Negative","3":"-6.699181"},{"1":"Mega-environment","2":"Positive","3":"3.518093"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
-<div id="pc1-x-pc2" class="section level2" number="3.10">
-<h2><span class="header-section-number">3.10</span> PC1 x PC2</h2>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_scores</span>(mod_me<span class="sc">$</span>data[[<span class="dv">1</span>]],</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">type =</span> <span class="dv">2</span>,</span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">var =</span> <span class="st">&quot;GY&quot;</span>,</span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">highlight =</span> ME1,</span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">size.tex.gen =</span> <span class="fl">2.5</span>,</span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>              <span class="at">title =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>              <span class="at">col.alpha.gen =</span> <span class="fl">0.6</span>,</span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>              <span class="at">col.gen =</span> <span class="st">&quot;gray&quot;</span>,</span>
-<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>              <span class="at">plot_theme =</span> my_theme)</span>
-<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> </span>
-<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_scores</span>(mod_me<span class="sc">$</span>data[[<span class="dv">2</span>]],</span>
-<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>              <span class="at">type =</span> <span class="dv">2</span>,</span>
-<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>              <span class="at">var =</span> <span class="st">&quot;GY&quot;</span>,</span>
-<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>              <span class="at">highlight =</span> ME2,</span>
-<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>              <span class="at">size.tex.gen =</span> <span class="fl">2.5</span>,</span>
-<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>              <span class="at">title =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>              <span class="at">col.gen =</span> <span class="st">&quot;gray&quot;</span>,</span>
-<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>              <span class="at">col.alpha.gen =</span> <span class="fl">0.6</span>,</span>
-<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>              <span class="at">plot_theme =</span> my_theme)</span>
-<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> </span>
-<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_scores</span>(mod_me<span class="sc">$</span>data[[<span class="dv">3</span>]],</span>
-<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a>              <span class="at">type =</span> <span class="dv">2</span>,</span>
-<span id="cb23-26"><a href="#cb23-26" aria-hidden="true" tabindex="-1"></a>              <span class="at">var =</span> <span class="st">&quot;GY&quot;</span>,</span>
-<span id="cb23-27"><a href="#cb23-27" aria-hidden="true" tabindex="-1"></a>              <span class="at">highlight =</span> ME3,</span>
-<span id="cb23-28"><a href="#cb23-28" aria-hidden="true" tabindex="-1"></a>              <span class="at">size.tex.gen =</span> <span class="fl">2.5</span>,</span>
-<span id="cb23-29"><a href="#cb23-29" aria-hidden="true" tabindex="-1"></a>              <span class="at">title =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb23-30"><a href="#cb23-30" aria-hidden="true" tabindex="-1"></a>              <span class="at">col.gen =</span> <span class="st">&quot;gray&quot;</span>,</span>
-<span id="cb23-31"><a href="#cb23-31" aria-hidden="true" tabindex="-1"></a>              <span class="at">col.alpha.gen =</span> <span class="fl">0.6</span>,</span>
-<span id="cb23-32"><a href="#cb23-32" aria-hidden="true" tabindex="-1"></a>              <span class="at">plot_theme =</span> my_theme)</span>
-<span id="cb23-33"><a href="#cb23-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-34"><a href="#cb23-34" aria-hidden="true" tabindex="-1"></a><span class="fu">arrange_ggplot</span>(p1, p2, p3,</span>
-<span id="cb23-35"><a href="#cb23-35" aria-hidden="true" tabindex="-1"></a>               <span class="at">guides =</span> <span class="st">&quot;collect&quot;</span>)</span></code></pre></div>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-21"></span>
-<img src="code_files/figure-html/unnamed-chunk-21-1.png" alt="PC1 x PC2 biplot" width="960" />
+<div id="pc1-x-pc2" class="section level2" number="3.11">
+<h2><span class="header-section-number">3.11</span> PC1 x PC2</h2>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_scores</span>(mod_me<span class="sc">$</span>data[[<span class="dv">1</span>]],</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">type =</span> <span class="dv">2</span>,</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">var =</span> <span class="st">&quot;GY&quot;</span>,</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">highlight =</span> ME1,</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">size.tex.gen =</span> <span class="fl">2.5</span>,</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>              <span class="at">title =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>              <span class="at">col.alpha.gen =</span> <span class="fl">0.6</span>,</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>              <span class="at">col.gen =</span> <span class="st">&quot;gray&quot;</span>,</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>              <span class="at">plot_theme =</span> my_theme)</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> </span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_scores</span>(mod_me<span class="sc">$</span>data[[<span class="dv">2</span>]],</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>              <span class="at">type =</span> <span class="dv">2</span>,</span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>              <span class="at">var =</span> <span class="st">&quot;GY&quot;</span>,</span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>              <span class="at">highlight =</span> ME2,</span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>              <span class="at">size.tex.gen =</span> <span class="fl">2.5</span>,</span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>              <span class="at">title =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>              <span class="at">col.gen =</span> <span class="st">&quot;gray&quot;</span>,</span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a>              <span class="at">col.alpha.gen =</span> <span class="fl">0.6</span>,</span>
+<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a>              <span class="at">plot_theme =</span> my_theme)</span>
+<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> </span>
+<span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_scores</span>(mod_me<span class="sc">$</span>data[[<span class="dv">3</span>]],</span>
+<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a>              <span class="at">type =</span> <span class="dv">2</span>,</span>
+<span id="cb25-26"><a href="#cb25-26" aria-hidden="true" tabindex="-1"></a>              <span class="at">var =</span> <span class="st">&quot;GY&quot;</span>,</span>
+<span id="cb25-27"><a href="#cb25-27" aria-hidden="true" tabindex="-1"></a>              <span class="at">highlight =</span> ME3,</span>
+<span id="cb25-28"><a href="#cb25-28" aria-hidden="true" tabindex="-1"></a>              <span class="at">size.tex.gen =</span> <span class="fl">2.5</span>,</span>
+<span id="cb25-29"><a href="#cb25-29" aria-hidden="true" tabindex="-1"></a>              <span class="at">title =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb25-30"><a href="#cb25-30" aria-hidden="true" tabindex="-1"></a>              <span class="at">col.gen =</span> <span class="st">&quot;gray&quot;</span>,</span>
+<span id="cb25-31"><a href="#cb25-31" aria-hidden="true" tabindex="-1"></a>              <span class="at">col.alpha.gen =</span> <span class="fl">0.6</span>,</span>
+<span id="cb25-32"><a href="#cb25-32" aria-hidden="true" tabindex="-1"></a>              <span class="at">plot_theme =</span> my_theme)</span>
+<span id="cb25-33"><a href="#cb25-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-34"><a href="#cb25-34" aria-hidden="true" tabindex="-1"></a><span class="fu">arrange_ggplot</span>(p1, p2, p3,</span>
+<span id="cb25-35"><a href="#cb25-35" aria-hidden="true" tabindex="-1"></a>               <span class="at">guides =</span> <span class="st">&quot;collect&quot;</span>)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-22"></span>
+<img src="code_files/figure-html/unnamed-chunk-22-1.png" alt="PC1 x PC2 biplot" width="960" />
 <p class="caption">
 Figure 3.9: PC1 x PC2 biplot
 </p>
 </div>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;figs/fig10_PC1_PC2.pdf&quot;</span>, <span class="at">width =</span> <span class="dv">12</span>, <span class="at">height =</span> <span class="dv">6</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;figs/fig10_PC1_PC2.pdf&quot;</span>, <span class="at">width =</span> <span class="dv">12</span>, <span class="at">height =</span> <span class="dv">6</span>)</span></code></pre></div>
 </div>
-<div id="waasb-x-y-biplot" class="section level2" number="3.11">
-<h2><span class="header-section-number">3.11</span> WAASB X Y biplot</h2>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_scores</span>(mod_me<span class="sc">$</span>data[[<span class="dv">1</span>]],</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">type =</span> <span class="dv">3</span>,</span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">var =</span> <span class="st">&quot;GY&quot;</span>,</span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">highlight =</span> ME1,</span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">x.lim =</span> <span class="fu">c</span>(<span class="dv">8</span>, <span class="dv">13</span>),</span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>              <span class="at">x.lab =</span> <span class="fu">expression</span>(Grain<span class="sc">~</span>yield<span class="sc">~</span>(t<span class="sc">~</span>ha<span class="sc">^</span>{<span class="sc">-</span><span class="dv">1</span>})),</span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>              <span class="at">size.tex.gen =</span> <span class="fl">2.5</span>,</span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>              <span class="at">col.alpha.gen =</span> <span class="fl">0.4</span>,</span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>              <span class="at">col.gen =</span> <span class="st">&quot;gray&quot;</span>,</span>
-<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>              <span class="at">size.bor.tick =</span> <span class="fl">0.1</span>,</span>
-<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>              <span class="at">plot_theme =</span> my_theme)</span>
-<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> </span>
-<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_scores</span>(mod_me<span class="sc">$</span>data[[<span class="dv">2</span>]],</span>
-<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>              <span class="at">type =</span> <span class="dv">3</span>,</span>
-<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>              <span class="at">var =</span> <span class="st">&quot;GY&quot;</span>,</span>
-<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>              <span class="at">highlight =</span> ME2,</span>
-<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>              <span class="at">x.lab =</span> <span class="fu">expression</span>(Grain<span class="sc">~</span>yield<span class="sc">~</span>(t<span class="sc">~</span>ha<span class="sc">^</span>{<span class="sc">-</span><span class="dv">1</span>})),</span>
-<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a>              <span class="at">size.tex.gen =</span> <span class="fl">2.5</span>,</span>
-<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a>              <span class="at">x.lim =</span> <span class="fu">c</span>(<span class="dv">8</span>, <span class="dv">13</span>),</span>
-<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a>              <span class="at">col.alpha.gen =</span> <span class="fl">0.4</span>,</span>
-<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a>              <span class="at">col.gen =</span> <span class="st">&quot;gray&quot;</span>,</span>
-<span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a>              <span class="at">plot_theme =</span> my_theme)</span>
-<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-26"><a href="#cb25-26" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> </span>
-<span id="cb25-27"><a href="#cb25-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_scores</span>(mod_me<span class="sc">$</span>data[[<span class="dv">3</span>]],</span>
-<span id="cb25-28"><a href="#cb25-28" aria-hidden="true" tabindex="-1"></a>              <span class="at">type =</span> <span class="dv">3</span>,</span>
-<span id="cb25-29"><a href="#cb25-29" aria-hidden="true" tabindex="-1"></a>              <span class="at">var =</span> <span class="st">&quot;GY&quot;</span>,</span>
-<span id="cb25-30"><a href="#cb25-30" aria-hidden="true" tabindex="-1"></a>              <span class="at">highlight =</span> ME3,</span>
-<span id="cb25-31"><a href="#cb25-31" aria-hidden="true" tabindex="-1"></a>              <span class="at">x.lab =</span> <span class="fu">expression</span>(Grain<span class="sc">~</span>yield<span class="sc">~</span>(t<span class="sc">~</span>ha<span class="sc">^</span>{<span class="sc">-</span><span class="dv">1</span>})),</span>
-<span id="cb25-32"><a href="#cb25-32" aria-hidden="true" tabindex="-1"></a>              <span class="at">size.tex.gen =</span> <span class="fl">2.5</span>,</span>
-<span id="cb25-33"><a href="#cb25-33" aria-hidden="true" tabindex="-1"></a>              <span class="at">x.lim =</span> <span class="fu">c</span>(<span class="dv">8</span>, <span class="dv">13</span>),</span>
-<span id="cb25-34"><a href="#cb25-34" aria-hidden="true" tabindex="-1"></a>              <span class="at">col.alpha.gen =</span> <span class="fl">0.4</span>,</span>
-<span id="cb25-35"><a href="#cb25-35" aria-hidden="true" tabindex="-1"></a>              <span class="at">col.gen =</span> <span class="st">&quot;gray&quot;</span>,</span>
-<span id="cb25-36"><a href="#cb25-36" aria-hidden="true" tabindex="-1"></a>              <span class="at">plot_theme =</span> my_theme)</span>
-<span id="cb25-37"><a href="#cb25-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-38"><a href="#cb25-38" aria-hidden="true" tabindex="-1"></a><span class="fu">arrange_ggplot</span>(p1, p2, p3,</span>
-<span id="cb25-39"><a href="#cb25-39" aria-hidden="true" tabindex="-1"></a>               <span class="at">guides =</span> <span class="st">&quot;collect&quot;</span>)</span></code></pre></div>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-22"></span>
-<img src="code_files/figure-html/unnamed-chunk-22-1.png" alt="WAASB X Y biplot" width="960" />
+<div id="waasb-x-y-biplot" class="section level2" number="3.12">
+<h2><span class="header-section-number">3.12</span> WAASB X Y biplot</h2>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_scores</span>(mod_me<span class="sc">$</span>data[[<span class="dv">1</span>]],</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">type =</span> <span class="dv">3</span>,</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">var =</span> <span class="st">&quot;GY&quot;</span>,</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">highlight =</span> ME1,</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">x.lim =</span> <span class="fu">c</span>(<span class="dv">8</span>, <span class="dv">13</span>),</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>              <span class="at">x.lab =</span> <span class="fu">expression</span>(Grain<span class="sc">~</span>yield<span class="sc">~</span>(t<span class="sc">~</span>ha<span class="sc">^</span>{<span class="sc">-</span><span class="dv">1</span>})),</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>              <span class="at">size.tex.gen =</span> <span class="fl">2.5</span>,</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>              <span class="at">col.alpha.gen =</span> <span class="fl">0.4</span>,</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>              <span class="at">col.gen =</span> <span class="st">&quot;gray&quot;</span>,</span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>              <span class="at">size.bor.tick =</span> <span class="fl">0.1</span>,</span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>              <span class="at">plot_theme =</span> my_theme)</span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> </span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_scores</span>(mod_me<span class="sc">$</span>data[[<span class="dv">2</span>]],</span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>              <span class="at">type =</span> <span class="dv">3</span>,</span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>              <span class="at">var =</span> <span class="st">&quot;GY&quot;</span>,</span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>              <span class="at">highlight =</span> ME2,</span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>              <span class="at">x.lab =</span> <span class="fu">expression</span>(Grain<span class="sc">~</span>yield<span class="sc">~</span>(t<span class="sc">~</span>ha<span class="sc">^</span>{<span class="sc">-</span><span class="dv">1</span>})),</span>
+<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a>              <span class="at">size.tex.gen =</span> <span class="fl">2.5</span>,</span>
+<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a>              <span class="at">x.lim =</span> <span class="fu">c</span>(<span class="dv">8</span>, <span class="dv">13</span>),</span>
+<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a>              <span class="at">col.alpha.gen =</span> <span class="fl">0.4</span>,</span>
+<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a>              <span class="at">col.gen =</span> <span class="st">&quot;gray&quot;</span>,</span>
+<span id="cb27-24"><a href="#cb27-24" aria-hidden="true" tabindex="-1"></a>              <span class="at">plot_theme =</span> my_theme)</span>
+<span id="cb27-25"><a href="#cb27-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-26"><a href="#cb27-26" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> </span>
+<span id="cb27-27"><a href="#cb27-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_scores</span>(mod_me<span class="sc">$</span>data[[<span class="dv">3</span>]],</span>
+<span id="cb27-28"><a href="#cb27-28" aria-hidden="true" tabindex="-1"></a>              <span class="at">type =</span> <span class="dv">3</span>,</span>
+<span id="cb27-29"><a href="#cb27-29" aria-hidden="true" tabindex="-1"></a>              <span class="at">var =</span> <span class="st">&quot;GY&quot;</span>,</span>
+<span id="cb27-30"><a href="#cb27-30" aria-hidden="true" tabindex="-1"></a>              <span class="at">highlight =</span> ME3,</span>
+<span id="cb27-31"><a href="#cb27-31" aria-hidden="true" tabindex="-1"></a>              <span class="at">x.lab =</span> <span class="fu">expression</span>(Grain<span class="sc">~</span>yield<span class="sc">~</span>(t<span class="sc">~</span>ha<span class="sc">^</span>{<span class="sc">-</span><span class="dv">1</span>})),</span>
+<span id="cb27-32"><a href="#cb27-32" aria-hidden="true" tabindex="-1"></a>              <span class="at">size.tex.gen =</span> <span class="fl">2.5</span>,</span>
+<span id="cb27-33"><a href="#cb27-33" aria-hidden="true" tabindex="-1"></a>              <span class="at">x.lim =</span> <span class="fu">c</span>(<span class="dv">8</span>, <span class="dv">13</span>),</span>
+<span id="cb27-34"><a href="#cb27-34" aria-hidden="true" tabindex="-1"></a>              <span class="at">col.alpha.gen =</span> <span class="fl">0.4</span>,</span>
+<span id="cb27-35"><a href="#cb27-35" aria-hidden="true" tabindex="-1"></a>              <span class="at">col.gen =</span> <span class="st">&quot;gray&quot;</span>,</span>
+<span id="cb27-36"><a href="#cb27-36" aria-hidden="true" tabindex="-1"></a>              <span class="at">plot_theme =</span> my_theme)</span>
+<span id="cb27-37"><a href="#cb27-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-38"><a href="#cb27-38" aria-hidden="true" tabindex="-1"></a><span class="fu">arrange_ggplot</span>(p1, p2, p3,</span>
+<span id="cb27-39"><a href="#cb27-39" aria-hidden="true" tabindex="-1"></a>               <span class="at">guides =</span> <span class="st">&quot;collect&quot;</span>)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-23"></span>
+<img src="code_files/figure-html/unnamed-chunk-23-1.png" alt="WAASB X Y biplot" width="960" />
 <p class="caption">
 Figure 3.10: WAASB X Y biplot
 </p>
 </div>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;figs/fig11_waasb_y_biplot.pdf&quot;</span>, <span class="at">width =</span> <span class="dv">12</span>, <span class="at">height =</span> <span class="dv">6</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;figs/fig11_waasb_y_biplot.pdf&quot;</span>, <span class="at">width =</span> <span class="dv">12</span>, <span class="at">height =</span> <span class="dv">6</span>)</span></code></pre></div>
 </div>
 </div>
-<div id="system" class="section level1" number="4">
-<h1><span class="header-section-number">4</span> System</h1>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="do">## R version 4.2.0 (2022-04-22 ucrt)</span></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Platform: x86_64-w64-mingw32/x64 (64-bit)</span></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Running under: Windows 10 x64 (build 22000)</span></span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Matrix products: default</span></span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="do">## locale:</span></span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] LC_COLLATE=Portuguese_Brazil.utf8  LC_CTYPE=Portuguese_Brazil.utf8   </span></span>
-<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [3] LC_MONETARY=Portuguese_Brazil.utf8 LC_NUMERIC=C                      </span></span>
-<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a><span class="do">## [5] LC_TIME=Portuguese_Brazil.utf8    </span></span>
-<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a><span class="do">## attached base packages:</span></span>
-<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
-<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a><span class="do">## other attached packages:</span></span>
-<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] rnaturalearth_0.1.0 metan_1.17.0        forcats_0.5.1      </span></span>
-<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a><span class="do">##  [4] stringr_1.4.0       dplyr_1.0.9         purrr_0.3.4        </span></span>
-<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a><span class="do">##  [7] readr_2.1.2         tidyr_1.2.0         tibble_3.1.7       </span></span>
-<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a><span class="do">## [10] tidyverse_1.3.1     corrr_0.4.3         ggridges_0.5.3     </span></span>
-<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a><span class="do">## [13] superheat_0.1.0     ggh4x_0.2.1         ggrepel_0.9.1      </span></span>
-<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a><span class="do">## [16] FactoMineR_2.4      factoextra_1.0.7    ggplot2_3.3.6      </span></span>
-<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a><span class="do">## [19] rio_0.5.29          EnvRtype_1.1.0     </span></span>
-<span id="cb27-24"><a href="#cb27-24" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb27-25"><a href="#cb27-25" aria-hidden="true" tabindex="-1"></a><span class="do">## loaded via a namespace (and not attached):</span></span>
-<span id="cb27-26"><a href="#cb27-26" aria-hidden="true" tabindex="-1"></a><span class="do">##   [1] minqa_1.2.4              colorspace_2.0-3         ggsignif_0.6.3          </span></span>
-<span id="cb27-27"><a href="#cb27-27" aria-hidden="true" tabindex="-1"></a><span class="do">##   [4] ellipsis_0.3.2           class_7.3-20             ggdendro_0.1.23         </span></span>
-<span id="cb27-28"><a href="#cb27-28" aria-hidden="true" tabindex="-1"></a><span class="do">##   [7] fs_1.5.2                 rstudioapi_0.13          proxy_0.4-27            </span></span>
-<span id="cb27-29"><a href="#cb27-29" aria-hidden="true" tabindex="-1"></a><span class="do">##  [10] ggpubr_0.4.0             farver_2.1.0             DT_0.23                 </span></span>
-<span id="cb27-30"><a href="#cb27-30" aria-hidden="true" tabindex="-1"></a><span class="do">##  [13] fansi_1.0.3              lubridate_1.8.0          mathjaxr_1.6-0          </span></span>
-<span id="cb27-31"><a href="#cb27-31" aria-hidden="true" tabindex="-1"></a><span class="do">##  [16] xml2_1.3.3               codetools_0.2-18         splines_4.2.0           </span></span>
-<span id="cb27-32"><a href="#cb27-32" aria-hidden="true" tabindex="-1"></a><span class="do">##  [19] leaps_3.1                knitr_1.39               polyclip_1.10-0         </span></span>
-<span id="cb27-33"><a href="#cb27-33" aria-hidden="true" tabindex="-1"></a><span class="do">##  [22] jsonlite_1.8.0           nloptr_2.0.3             broom_0.8.0             </span></span>
-<span id="cb27-34"><a href="#cb27-34" aria-hidden="true" tabindex="-1"></a><span class="do">##  [25] cluster_2.1.3            dbplyr_2.2.0             ggforce_0.3.3           </span></span>
-<span id="cb27-35"><a href="#cb27-35" aria-hidden="true" tabindex="-1"></a><span class="do">##  [28] compiler_4.2.0           httr_1.4.3               backports_1.4.1         </span></span>
-<span id="cb27-36"><a href="#cb27-36" aria-hidden="true" tabindex="-1"></a><span class="do">##  [31] assertthat_0.2.1         Matrix_1.4-1             fastmap_1.1.0           </span></span>
-<span id="cb27-37"><a href="#cb27-37" aria-hidden="true" tabindex="-1"></a><span class="do">##  [34] cli_3.3.0                s2_1.0.7                 tweenr_1.0.2            </span></span>
-<span id="cb27-38"><a href="#cb27-38" aria-hidden="true" tabindex="-1"></a><span class="do">##  [37] htmltools_0.5.2          tools_4.2.0              lmerTest_3.1-3          </span></span>
-<span id="cb27-39"><a href="#cb27-39" aria-hidden="true" tabindex="-1"></a><span class="do">##  [40] gtable_0.3.0             glue_1.6.2               reshape2_1.4.4          </span></span>
-<span id="cb27-40"><a href="#cb27-40" aria-hidden="true" tabindex="-1"></a><span class="do">##  [43] wk_0.6.0                 ggthemes_4.2.4           Rcpp_1.0.8.3            </span></span>
-<span id="cb27-41"><a href="#cb27-41" aria-hidden="true" tabindex="-1"></a><span class="do">##  [46] carData_3.0-5            cellranger_1.1.0         jquerylib_0.1.4         </span></span>
-<span id="cb27-42"><a href="#cb27-42" aria-hidden="true" tabindex="-1"></a><span class="do">##  [49] vctrs_0.4.1              nlme_3.1-157             iterators_1.0.14        </span></span>
-<span id="cb27-43"><a href="#cb27-43" aria-hidden="true" tabindex="-1"></a><span class="do">##  [52] xfun_0.31                openxlsx_4.2.5           lme4_1.1-29             </span></span>
-<span id="cb27-44"><a href="#cb27-44" aria-hidden="true" tabindex="-1"></a><span class="do">##  [55] rvest_1.0.2              lifecycle_1.0.1          rnaturalearthhires_0.2.0</span></span>
-<span id="cb27-45"><a href="#cb27-45" aria-hidden="true" tabindex="-1"></a><span class="do">##  [58] rstatix_0.7.0            MASS_7.3-57              scales_1.2.0            </span></span>
-<span id="cb27-46"><a href="#cb27-46" aria-hidden="true" tabindex="-1"></a><span class="do">##  [61] ragg_1.2.2               hms_1.1.1                RColorBrewer_1.1-3      </span></span>
-<span id="cb27-47"><a href="#cb27-47" aria-hidden="true" tabindex="-1"></a><span class="do">##  [64] yaml_2.3.5               curl_4.3.2               sass_0.4.1              </span></span>
-<span id="cb27-48"><a href="#cb27-48" aria-hidden="true" tabindex="-1"></a><span class="do">##  [67] reshape_0.8.9            stringi_1.7.6            highr_0.9               </span></span>
-<span id="cb27-49"><a href="#cb27-49" aria-hidden="true" tabindex="-1"></a><span class="do">##  [70] foreach_1.5.2            e1071_1.7-11             boot_1.3-28             </span></span>
-<span id="cb27-50"><a href="#cb27-50" aria-hidden="true" tabindex="-1"></a><span class="do">##  [73] zip_2.2.0                systemfonts_1.0.4        rlang_1.0.2             </span></span>
-<span id="cb27-51"><a href="#cb27-51" aria-hidden="true" tabindex="-1"></a><span class="do">##  [76] pkgconfig_2.0.3          evaluate_0.15            lattice_0.20-45         </span></span>
-<span id="cb27-52"><a href="#cb27-52" aria-hidden="true" tabindex="-1"></a><span class="do">##  [79] sf_1.0-7                 labeling_0.4.2           patchwork_1.1.1         </span></span>
-<span id="cb27-53"><a href="#cb27-53" aria-hidden="true" tabindex="-1"></a><span class="do">##  [82] htmlwidgets_1.5.4        tidyselect_1.1.2         GGally_2.1.2            </span></span>
-<span id="cb27-54"><a href="#cb27-54" aria-hidden="true" tabindex="-1"></a><span class="do">##  [85] plyr_1.8.7               magrittr_2.0.3           bookdown_0.27           </span></span>
-<span id="cb27-55"><a href="#cb27-55" aria-hidden="true" tabindex="-1"></a><span class="do">##  [88] R6_2.5.1                 generics_0.1.2           DBI_1.1.3               </span></span>
-<span id="cb27-56"><a href="#cb27-56" aria-hidden="true" tabindex="-1"></a><span class="do">##  [91] pillar_1.7.0             haven_2.5.0              foreign_0.8-82          </span></span>
-<span id="cb27-57"><a href="#cb27-57" aria-hidden="true" tabindex="-1"></a><span class="do">##  [94] withr_2.5.0              units_0.8-0              abind_1.4-5             </span></span>
-<span id="cb27-58"><a href="#cb27-58" aria-hidden="true" tabindex="-1"></a><span class="do">##  [97] sp_1.5-0                 scatterplot3d_0.3-41     car_3.1-0               </span></span>
-<span id="cb27-59"><a href="#cb27-59" aria-hidden="true" tabindex="-1"></a><span class="do">## [100] modelr_0.1.8             crayon_1.5.1             KernSmooth_2.23-20      </span></span>
-<span id="cb27-60"><a href="#cb27-60" aria-hidden="true" tabindex="-1"></a><span class="do">## [103] utf8_1.2.2               tzdb_0.3.0               rmarkdown_2.14          </span></span>
-<span id="cb27-61"><a href="#cb27-61" aria-hidden="true" tabindex="-1"></a><span class="do">## [106] grid_4.2.0               readxl_1.4.0             data.table_1.14.2       </span></span>
-<span id="cb27-62"><a href="#cb27-62" aria-hidden="true" tabindex="-1"></a><span class="do">## [109] rmdformats_1.0.4         reprex_2.0.1             digest_0.6.29           </span></span>
-<span id="cb27-63"><a href="#cb27-63" aria-hidden="true" tabindex="-1"></a><span class="do">## [112] classInt_0.4-7           flashClust_1.01-2        numDeriv_2016.8-1.1     </span></span>
-<span id="cb27-64"><a href="#cb27-64" aria-hidden="true" tabindex="-1"></a><span class="do">## [115] textshaping_0.3.6        munsell_0.5.0            bslib_0.3.1</span></span></code></pre></div>
+<div id="section-info" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> Section info</h1>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="do">## R version 4.2.0 (2022-04-22 ucrt)</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Platform: x86_64-w64-mingw32/x64 (64-bit)</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Running under: Windows 10 x64 (build 22000)</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Matrix products: default</span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a><span class="do">## locale:</span></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] LC_COLLATE=Portuguese_Brazil.utf8  LC_CTYPE=Portuguese_Brazil.utf8   </span></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [3] LC_MONETARY=Portuguese_Brazil.utf8 LC_NUMERIC=C                      </span></span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a><span class="do">## [5] LC_TIME=Portuguese_Brazil.utf8    </span></span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a><span class="do">## attached base packages:</span></span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a><span class="do">## other attached packages:</span></span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] rnaturalearth_0.1.0 metan_1.17.0        forcats_0.5.1      </span></span>
+<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a><span class="do">##  [4] stringr_1.4.0       dplyr_1.0.9         purrr_0.3.4        </span></span>
+<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a><span class="do">##  [7] readr_2.1.2         tidyr_1.2.0         tibble_3.1.7       </span></span>
+<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a><span class="do">## [10] tidyverse_1.3.1     corrr_0.4.3         ggridges_0.5.3     </span></span>
+<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a><span class="do">## [13] superheat_0.1.0     ggh4x_0.2.1         ggrepel_0.9.1      </span></span>
+<span id="cb29-22"><a href="#cb29-22" aria-hidden="true" tabindex="-1"></a><span class="do">## [16] FactoMineR_2.4      factoextra_1.0.7    ggplot2_3.3.6      </span></span>
+<span id="cb29-23"><a href="#cb29-23" aria-hidden="true" tabindex="-1"></a><span class="do">## [19] rio_0.5.29          EnvRtype_1.1.0     </span></span>
+<span id="cb29-24"><a href="#cb29-24" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb29-25"><a href="#cb29-25" aria-hidden="true" tabindex="-1"></a><span class="do">## loaded via a namespace (and not attached):</span></span>
+<span id="cb29-26"><a href="#cb29-26" aria-hidden="true" tabindex="-1"></a><span class="do">##   [1] minqa_1.2.4          colorspace_2.0-3     ellipsis_0.3.2      </span></span>
+<span id="cb29-27"><a href="#cb29-27" aria-hidden="true" tabindex="-1"></a><span class="do">##   [4] class_7.3-20         fs_1.5.2             rstudioapi_0.13     </span></span>
+<span id="cb29-28"><a href="#cb29-28" aria-hidden="true" tabindex="-1"></a><span class="do">##   [7] proxy_0.4-27         farver_2.1.1         DT_0.23             </span></span>
+<span id="cb29-29"><a href="#cb29-29" aria-hidden="true" tabindex="-1"></a><span class="do">##  [10] fansi_1.0.3          lubridate_1.8.0      mathjaxr_1.6-0      </span></span>
+<span id="cb29-30"><a href="#cb29-30" aria-hidden="true" tabindex="-1"></a><span class="do">##  [13] xml2_1.3.3           codetools_0.2-18     splines_4.2.0       </span></span>
+<span id="cb29-31"><a href="#cb29-31" aria-hidden="true" tabindex="-1"></a><span class="do">##  [16] leaps_3.1            knitr_1.39           polyclip_1.10-0     </span></span>
+<span id="cb29-32"><a href="#cb29-32" aria-hidden="true" tabindex="-1"></a><span class="do">##  [19] jsonlite_1.8.0       nloptr_2.0.3         broom_1.0.0         </span></span>
+<span id="cb29-33"><a href="#cb29-33" aria-hidden="true" tabindex="-1"></a><span class="do">##  [22] cluster_2.1.3        dbplyr_2.2.1         ggforce_0.3.3       </span></span>
+<span id="cb29-34"><a href="#cb29-34" aria-hidden="true" tabindex="-1"></a><span class="do">##  [25] compiler_4.2.0       httr_1.4.3           backports_1.4.1     </span></span>
+<span id="cb29-35"><a href="#cb29-35" aria-hidden="true" tabindex="-1"></a><span class="do">##  [28] assertthat_0.2.1     Matrix_1.4-1         fastmap_1.1.0       </span></span>
+<span id="cb29-36"><a href="#cb29-36" aria-hidden="true" tabindex="-1"></a><span class="do">##  [31] cli_3.3.0            tweenr_1.0.2         htmltools_0.5.2     </span></span>
+<span id="cb29-37"><a href="#cb29-37" aria-hidden="true" tabindex="-1"></a><span class="do">##  [34] tools_4.2.0          lmerTest_3.1-3       gtable_0.3.0        </span></span>
+<span id="cb29-38"><a href="#cb29-38" aria-hidden="true" tabindex="-1"></a><span class="do">##  [37] glue_1.6.2           Rcpp_1.0.8.3         cellranger_1.1.0    </span></span>
+<span id="cb29-39"><a href="#cb29-39" aria-hidden="true" tabindex="-1"></a><span class="do">##  [40] jquerylib_0.1.4      vctrs_0.4.1          nlme_3.1-157        </span></span>
+<span id="cb29-40"><a href="#cb29-40" aria-hidden="true" tabindex="-1"></a><span class="do">##  [43] xfun_0.31            openxlsx_4.2.5       lme4_1.1-30         </span></span>
+<span id="cb29-41"><a href="#cb29-41" aria-hidden="true" tabindex="-1"></a><span class="do">##  [46] rvest_1.0.2          lifecycle_1.0.1      MASS_7.3-57         </span></span>
+<span id="cb29-42"><a href="#cb29-42" aria-hidden="true" tabindex="-1"></a><span class="do">##  [49] scales_1.2.0         ragg_1.2.2           hms_1.1.1           </span></span>
+<span id="cb29-43"><a href="#cb29-43" aria-hidden="true" tabindex="-1"></a><span class="do">##  [52] RColorBrewer_1.1-3   yaml_2.3.5           curl_4.3.2          </span></span>
+<span id="cb29-44"><a href="#cb29-44" aria-hidden="true" tabindex="-1"></a><span class="do">##  [55] sass_0.4.1           reshape_0.8.9        stringi_1.7.6       </span></span>
+<span id="cb29-45"><a href="#cb29-45" aria-hidden="true" tabindex="-1"></a><span class="do">##  [58] highr_0.9            e1071_1.7-11         boot_1.3-28         </span></span>
+<span id="cb29-46"><a href="#cb29-46" aria-hidden="true" tabindex="-1"></a><span class="do">##  [61] zip_2.2.0            systemfonts_1.0.4    rlang_1.0.3         </span></span>
+<span id="cb29-47"><a href="#cb29-47" aria-hidden="true" tabindex="-1"></a><span class="do">##  [64] pkgconfig_2.0.3      evaluate_0.15        lattice_0.20-45     </span></span>
+<span id="cb29-48"><a href="#cb29-48" aria-hidden="true" tabindex="-1"></a><span class="do">##  [67] sf_1.0-7             labeling_0.4.2       patchwork_1.1.1     </span></span>
+<span id="cb29-49"><a href="#cb29-49" aria-hidden="true" tabindex="-1"></a><span class="do">##  [70] htmlwidgets_1.5.4    tidyselect_1.1.2     GGally_2.1.2        </span></span>
+<span id="cb29-50"><a href="#cb29-50" aria-hidden="true" tabindex="-1"></a><span class="do">##  [73] plyr_1.8.7           magrittr_2.0.3       bookdown_0.27       </span></span>
+<span id="cb29-51"><a href="#cb29-51" aria-hidden="true" tabindex="-1"></a><span class="do">##  [76] R6_2.5.1             generics_0.1.3       DBI_1.1.3           </span></span>
+<span id="cb29-52"><a href="#cb29-52" aria-hidden="true" tabindex="-1"></a><span class="do">##  [79] pillar_1.7.0         haven_2.5.0          foreign_0.8-82      </span></span>
+<span id="cb29-53"><a href="#cb29-53" aria-hidden="true" tabindex="-1"></a><span class="do">##  [82] withr_2.5.0          units_0.8-0          sp_1.5-0            </span></span>
+<span id="cb29-54"><a href="#cb29-54" aria-hidden="true" tabindex="-1"></a><span class="do">##  [85] scatterplot3d_0.3-41 modelr_0.1.8         crayon_1.5.1        </span></span>
+<span id="cb29-55"><a href="#cb29-55" aria-hidden="true" tabindex="-1"></a><span class="do">##  [88] KernSmooth_2.23-20   utf8_1.2.2           tzdb_0.3.0          </span></span>
+<span id="cb29-56"><a href="#cb29-56" aria-hidden="true" tabindex="-1"></a><span class="do">##  [91] rmarkdown_2.14       grid_4.2.0           readxl_1.4.0        </span></span>
+<span id="cb29-57"><a href="#cb29-57" aria-hidden="true" tabindex="-1"></a><span class="do">##  [94] data.table_1.14.2    rmdformats_1.0.4     reprex_2.0.1        </span></span>
+<span id="cb29-58"><a href="#cb29-58" aria-hidden="true" tabindex="-1"></a><span class="do">##  [97] digest_0.6.29        classInt_0.4-7       flashClust_1.01-2   </span></span>
+<span id="cb29-59"><a href="#cb29-59" aria-hidden="true" tabindex="-1"></a><span class="do">## [100] numDeriv_2016.8-1.1  textshaping_0.3.6    munsell_0.5.0       </span></span>
+<span id="cb29-60"><a href="#cb29-60" aria-hidden="true" tabindex="-1"></a><span class="do">## [103] bslib_0.3.1</span></span></code></pre></div>
 </div>
 </div>
 
