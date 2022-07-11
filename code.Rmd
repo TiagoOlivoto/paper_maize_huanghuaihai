@@ -325,7 +325,7 @@ out2 <-
 
 
 ### vpd {.panelset}
-```{r echo=FALSE, fig.cap="Quantiles for vapor pressure deficit observed in the studied environments (a) and mega-environments (b) across distinct crop stages.", fig.width=13, fig.height=7}
+```{r fig.cap="Quantiles for vapor pressure deficit observed in the studied environments (a) and mega-environments (b) across distinct crop stages.", fig.width=13, fig.height=7}
 # plot the distribution of envirotypes for dbp
 variable <- "vpd"
 p1 <- 
@@ -390,7 +390,7 @@ ggsave("figs/fig5_typology_vpd.pdf", width = 12, height = 7)
 
 
 ### dbp {.panelset}
-```{r echo=FALSE, fig.cap="Quantiles for deficit by precipitation observed in the studied environments (a) and mega-environments (b) across distinct crop stages.", fig.width=13, fig.height=7}
+```{r fig.cap="Quantiles for deficit by precipitation observed in the studied environments (a) and mega-environments (b) across distinct crop stages.", fig.width=13, fig.height=7}
 
 # plot the distribution of envirotypes for dbp
 variable <- "dbp"
