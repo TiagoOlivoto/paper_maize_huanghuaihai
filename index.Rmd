@@ -1,14 +1,14 @@
 <!-- % About -->
 # <i class="fas fa-glasses"></i>About {-}
-In this website are available the data and scripts used in the manuscript *MGIDI: a powerful tool to analyze plant multivariate data*
+In this website are available the data and scripts used in the manuscript *Mega-environment delineation using climate information improved gains in multi-trait selection of maize across Huanghuaihai plain in China*
 
 
 # <i class="fas fa-code"></i>How to reproduce? {-}
 
-* [Download data]()
-* Open the `*.Rmd` file in RStudio.
+* [Download data](https://github.com/TiagoOlivoto/paper_maize_huanghuaihai/archive/refs/heads/master.zip)
+* Open the `*.Rmd` files in RStudio.
 * Optionally change functions and arguments.
-* Knit the document to see the results.
+* Re-build the document to see the changes.
 
 
 <!-- academic icons -->
