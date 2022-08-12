@@ -57,18 +57,9 @@ print_table = function(df,
 ```{r echo=FALSE}
 # Include a column to mega-environment
 df_traits <-
-  import("https://bit.ly/df_traits") |> 
+  import("paper/v4/raw_data2.csv") |> 
   metan::as_factor(1:3)
-#  
-me2 <- c("YC2020", "SX2020", "JS2020", "NY2020")
-me3 <- c("GC2020", "SZ2020", "JN2020", "LZ2020")
-me1 <- set_difference(as.character(unique(df_traits$ENV)), me2, me3)
 
-df_traits <- 
-  df_traits |> 
-  mutate(me = case_when(ENV %in% me1 ~ "ME1",
-                        ENV %in% me2 ~ "ME2",
-                        ENV %in% me3 ~ "ME3"))
 
 ```
 
@@ -95,18 +86,51 @@ mtsi_me3 <- mtsi(mod_me$data[[3]], SI = SI, verbose = FALSE)
 ```
 
 
-
-# factor loadings
+# Table S1 {-}
 ```{r echo=FALSE}
-models <- 
+lrt <- 
+  gmd(mod_global, "lrt") |> 
+  mutate(`P-value<0.01` = ifelse(`Pr(>Chisq)` < 0.01, "yes", "no"))
+
+print_table(lrt,
+            digits = 15,
+            caption = " Likelihood Ratio Test (LRT) for the random effects for each analyzed trait.")
+```
+
+
+
+# Table S2 {-}
+```{r echo=FALSE}
+variances <- 
   list(
-ME1 = gmd(mtsi_me1, "FA"),
-ME2 = gmd(mtsi_me2, "FA"),
-ME3 = gmd(mtsi_me3, "FA")
-  )
+    ALL = gmd(mtsi_global, "PCA"),
+    ME1 = gmd(mtsi_me1, "PCA"),
+    ME2 = gmd(mtsi_me2, "PCA"),
+    ME3 = gmd(mtsi_me3, "PCA")
+  ) |> 
+  bind_rows(.id = "model")
 
-bind_rows(models, .id = "model") |> 
-  print_table(caption = "Facot loadings")
-
+print_table(variances, caption = "Eigenvalues and explained variance for the factor analysis acroos all environments (ALL) and within each mega-environments (ME1, ME2, and ME3).")
 
 ```
+
+
+
+
+# Table S3 {-}
+```{r echo=FALSE}
+loadings <- 
+  list(
+    ALL = gmd(mtsi_global, "FA"),
+    ME1 = gmd(mtsi_me1, "FA"),
+    ME2 = gmd(mtsi_me2, "FA"),
+    ME3 = gmd(mtsi_me3, "FA")
+  ) |> 
+  bind_rows(.id = "model")
+
+print_table(loadings, caption = "Factorial loadings after varimax rotation, and communalities obtained in the factor analysis acroos all environments (ALL) and within each mega-environments (ME1, ME2, and ME3).")
+
+```
+
+
+

@@ -1,4 +1,4 @@
-name: paper_mgidi_pm
+name: paper_mtsi_fps
 output_dir: docs
 exclude: ["*.docx", "*.pptx", "*.pdf", "*.R", "*.tmp"]
 output:
@@ -11,7 +11,7 @@ output:
     lightbox: true
     gallery: true
 navbar:
-  title: MGIDI Plant Methods
+  title: Supplementary material
   left:
   - text: About
     icon: fa fa-home
