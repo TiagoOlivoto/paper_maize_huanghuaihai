@@ -1,6 +1,6 @@
 name: paper_mtsi_fps
 output_dir: docs
-exclude: ["*.docx", "*.pptx", "*.pdf", "*.R", "*.tmp"]
+exclude: ["*.docx", "*.pptx", "*.pdf", "*.R", "*.tmp", "code_v4.Rmd"]
 output:
   rmdformats::readthedown:
     toc_depth: 3

@@ -1,4 +1,4 @@
-% Supplementary figures 
+% Supplementary figures
 
 
 ```{r global_options, include = FALSE}
@@ -13,16 +13,23 @@ knitr::opts_chunk$set(cache = FALSE,
 
 
 ```{r warning=FALSE, message=FALSE, echo=FALSE}
+
+library(EnvRtype)
 library(rio)
-library(tidyverse)
+library(factoextra)
+library(FactoMineR)
+library(ggrepel)
+library(ggh4x)
+library(superheat)
+library(ggridges)
 library(metan)
+library(rnaturalearth)
+library(lme4)
+library(lmerTest)
+library(broom.mixed)
+library(tidyverse)
 library(kableExtra)
 
-my_theme <- 
-  theme_bw() +
-  theme(panel.spacing = unit(0, "cm"),
-        panel.grid = element_blank(),
-        legend.position = "bottom")
 ```
 
 
@@ -31,7 +38,7 @@ my_theme <-
 
 print_table = function(df,
                        caption,
-                       digits = 2,
+                       digits = 4,
                        full_width = TRUE,
                        col.names = NA,
                        longtable = FALSE,
@@ -47,70 +54,63 @@ print_table = function(df,
         caption = caption,
         escape = scape,
         longtable = longtable) %>%
-    kable_classic(lightable_options = "striped", html_font = "sans", full_width = full_width) %>% 
+    kable_classic(lightable_options = "striped", html_font = "sans", full_width = full_width) %>%
     kable_styling(bootstrap_options = html_opt)
 }
 
-```
+
+# get variance components
+get_vcomp <- function(model){
+  model |> 
+    tidy(effects = "ran_pars") |> 
+    mutate(variance = estimate ^ 2) |> 
+    dplyr::select(group, variance)
+}
+
+# get lrt
+get_lrt <- function(model){
+  model |> 
+    ranova() |> 
+    as.data.frame() |> 
+    mutate(p_val = `Pr(>Chisq)`) |> 
+    rownames_to_column("term") |> 
+    dplyr::select(term, AIC, LRT, p_val) |> 
+    mutate(term = str_sub(term, start = 6, end = -2))
+}
 
 
-```{r echo=FALSE}
-# Include a column to mega-environment
-df_traits <-
-  import("paper/v4/raw_data2.csv") |> 
-  metan::as_factor(1:3)
-
-
-```
-
-
-
-```{r echo=FALSE}
-mod_global <- readRDS("data/mod_global.RData")
-## mtsi global
-SI <- 25
-mtsi_global <- mtsi(mod_global, SI = SI, verbose = FALSE)
-sel_gen <- mtsi_global$sel_gen
-```
-
-
-
-```{r echo=FALSE}
-mod_me <- readRDS("data/mod_me.RData")
-## mtsi me1
-mtsi_me1 <- mtsi(mod_me$data[[1]], SI = SI, verbose = FALSE)
-## mtsi me2
-mtsi_me2 <- mtsi(mod_me$data[[2]], SI = SI, verbose = FALSE)
-## mtsi me3
-mtsi_me3 <- mtsi(mod_me$data[[3]], SI = SI, verbose = FALSE)
 ```
 
 
 # Table S1 {-}
 ```{r echo=FALSE}
 lrt <- 
-  gmd(mod_global, "lrt") |> 
-  mutate(`P-value<0.01` = ifelse(`Pr(>Chisq)` < 0.01, "yes", "no"))
+  import("data/lrt.xlsx") |> 
+mutate(across(BTL:PH, function(x){
+  as.character(signif(x, 4))
+}))
 
-print_table(lrt,
-            digits = 15,
-            caption = " Likelihood Ratio Test (LRT) for the random effects for each analyzed trait.")
+print_table(lrt, "Likelihood Ratio Test (LRT) for the random effects for each analyzed trait")
 ```
+
+
 
 
 
 # Table S2 {-}
 ```{r echo=FALSE}
-variances <- 
+mgidi_mod <- readRDS("data/mgidi.Rdata")
+
+variances <-
   list(
-    ALL = gmd(mtsi_global, "PCA"),
-    ME1 = gmd(mtsi_me1, "PCA"),
-    ME2 = gmd(mtsi_me2, "PCA"),
-    ME3 = gmd(mtsi_me3, "PCA")
-  ) |> 
+    ME1 = gmd(mgidi_mod$mgidi[[1]], "PCA"),
+    ME2 = gmd(mgidi_mod$mgidi[[2]], "PCA"),
+    ME3 = gmd(mgidi_mod$mgidi[[3]], "PCA"),
+    ME4 = gmd(mgidi_mod$mgidi[[4]], "PCA")
+  ) |>
   bind_rows(.id = "model")
 
-print_table(variances, caption = "Eigenvalues and explained variance for the factor analysis acroos all environments (ALL) and within each mega-environments (ME1, ME2, and ME3).")
+print_table(variances, caption = "Eigenvalues and explained variance for the factor analysis acroos all environments (ALL) and within each mega-environments (ME1, ME2, ME3, and ME4).")
 
 ```
 
@@ -119,16 +119,32 @@ print_table(variances, caption = "Eigenvalues and explained variance for the fac
 
 # Table S3 {-}
 ```{r echo=FALSE}
-loadings <- 
+loadings <-
   list(
-    ALL = gmd(mtsi_global, "FA"),
-    ME1 = gmd(mtsi_me1, "FA"),
-    ME2 = gmd(mtsi_me2, "FA"),
-    ME3 = gmd(mtsi_me3, "FA")
-  ) |> 
+    ME1 = gmd(mgidi_mod$mgidi[[1]], "FA"),
+    ME2 = gmd(mgidi_mod$mgidi[[2]], "FA"),
+    ME3 = gmd(mgidi_mod$mgidi[[3]], "FA"),
+    ME4 = gmd(mgidi_mod$mgidi[[4]], "FA")
+  ) |>
   bind_rows(.id = "model")
 
-print_table(loadings, caption = "Factorial loadings after varimax rotation, and communalities obtained in the factor analysis acroos all environments (ALL) and within each mega-environments (ME1, ME2, and ME3).")
+print_table(loadings, caption = "Factorial loadings after varimax rotation, and communalities obtained in the factor analysis within each mega-environments (ME1, ME2, ME3, and ME4).")
+
+```
+
+
+
+
+# Table S4 {-}
+```{r echo=FALSE}
+gains <- import("data/gains.xlsx")
+
+gains |> 
+  set_names(c("ME", "TRAIT", "Xo", "Xs", "SD", "Xo", "Xs", "SD")) |> 
+  print_table(caption = "Selecion differentials for mean performance and stability of the studied traits in the four delineated mega environments.") |> 
+  add_header_above(c(" " = 2, "Mean performance" = 3, "Stability" = 3),
+                   align = "l")
+
 
 ```
 

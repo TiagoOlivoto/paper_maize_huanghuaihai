@@ -21,9 +21,13 @@ library(ggrepel)
 library(ggh4x)
 library(superheat)
 library(ggridges)
-library(tidyverse)
 library(metan)
 library(rnaturalearth)
+library(lme4)
+library(lmerTest)
+library(broom.mixed)
+library(tidyverse)
+library(lubridate)
 
 my_theme <- 
   theme_bw() +
@@ -33,136 +37,154 @@ my_theme <-
 ```
 
 
-```{r echo=FALSE}
-df_traits <- import("https://bit.ly/df_traits")
+
+
+```{r}
+real <- 
+  import("data/real_climate_data.xlsx") |> 
+  mutate(data = ymd(data))
+
+
+np <-
+  get_weather(env.id = "Shenzhou",
+              lat = 37.89,
+              lon = 115.71,
+              start.day = "01/05/2019",
+              end.day = "30/10/2020") |> 
+  param_radiation(merge = TRUE) |> 
+  dplyr::select(env, 
+                data = YYYYMMDD,
+                tmed_np = T2M,
+                tmax_np = T2M_MAX,
+                tmin_np = T2M_MIN,
+                rh_np = RH2M,
+                prec_np = PRECTOT,
+                n_np = n)
+
+correlation <- 
+  np |> 
+  right_join(real) |> 
+  dplyr::select(env, data, matches("real|np")) |> 
+  pivot_longer(-c(env, data)) |> 
+  separate(name, into = c("var", "method")) |> 
+  pivot_wider(names_from = method, values_from = value)
+
+
+ggplot(correlation, aes(np, real)) + 
+  facet_wrap(~var, scales = "free") +
+  geom_point(size = 2, alpha = 0.6) +
+  geom_smooth(method = "lm")
+
+library(metan)
+
+correlation |> 
+  group_by(var) |> 
+  doo(~corr_coef(., np, real)[["cor"]] |> 
+        as.data.frame()) |> 
+  distinct(var, .keep_all = TRUE) |> 
+  dplyr::select(var, real)
+
+```
+
+
+
+
+# Dataset
+```{r}
+df_traits <- 
+  import("data/df_traits.csv") |>
+  metan::as_factor(1:6)
+
+# long data
+df_traits_long <- 
+  df_traits |> 
+  pivot_longer(GMC:HSW)
+
 
 # grain yield mean in each environment
 df_gy <-
   df_traits |>
-  means_by(ENV, .vars = GY)
+  mean_by(ME, YEAR, .vars = GY)
 
-df_var <- 
-  df_traits |> 
-  means_by(ENV, GEN, .vars = GY) |> 
-  var_by(ENV) |> 
-  rename(VAR = GY)
-
-```
-
-
-
-```{r echo=FALSE}
-env_data_me <- import("https://bit.ly/df_climate")
-env_data <- env_data_me |> remove_cols(me)
-
-```
-
-```{r echo=FALSE}
-# long format for climate data
-env_data_d <-
-  env_data_me |>
-  remove_cols(env, prec, LON:YYYYMMDD, daysFromStart) |>
-  pivot_longer(-me)
-
-# long format for grain yield
-df_gy_dist <- 
-  df_traits |> 
-  select(me, GY) |> 
-  mutate(name = "GY", .after = me) |> 
-  rename(value = GY)
-
-
-```
-
-
-# Figure S1  {-}
-```{r echo=FALSE, fig.cap="Distribution of climate variables in the different mega-environments"}
-# bind climate and GY
-env_data_d <- rbind(df_gy_dist, env_data_d)
-# mean values for each trait
-env_data_mean <- means_by(env_data_d, name)
-env_data_memean <- means_by(env_data_d, name, me)
-
-ggplot(env_data_d, aes(x = value, y = me, fill = me)) +
-  geom_density_ridges(scale = 0.9) +
-  geom_vline(data = env_data_mean,
-             aes(xintercept = value),
-             linetype = 2) +
-  facet_grid(~name, scales = "free") +
-  theme(panel.grid.minor = element_blank(),
-        legend.position = "bottom",
-        legend.title = element_blank()) +
-  scale_y_discrete(expand = expansion(c(0, 0.05))) +
-  labs(x = "Observed value",
-       y = "Density",
-       fill = "") +
-  my_theme
-
+# genotypic variance in each mega-environment
+df_var_gy <- 
+  df_traits |>
+  group_by(YEAR, ME) |> 
+  do(lmer(GY ~ (1|GEN), data = .) |>
+       tidy(effects = "ran_pars") |> 
+       filter(group == "GEN") |> 
+       transmute(var = estimate^2))
 
 ```
 
 
 
 
+# Figure S1
 
-# Figure S2  {-}
+```{r fig.cap="biplot for PCA"}
+env_data <- 
+  readRDS("data/env_data.Rdata") |> 
+    mutate(me = case_when(
+    env %in% c("Yicheng") ~ "ME1",
+    env %in% c("Suixi", "Jieshou", "Nanyang") ~ "ME2",
+    env %in% c("Shenzhou", "Gaocheng", "Handan", "Dezhou") ~ "ME3",
+    env %in% c("Laizhou", "Jinan") ~ "ME4"
+  ),
+  .after = env)
 
-```{r echo=FALSE, fig.cap="contribution of variables"}
-pca <- 
-  import("https://bit.ly/df_pca") |> 
+env_data_m <- 
+  env_data |> 
+  select(-daysFromStart) |> 
+  mean_by(env, .vars = T2M:RTA) |> 
   column_to_rownames("env")
 
-
 # compute the PCA with
-
-pca_model <- PCA(pca,
-                 quali.sup = 14,
+pca_model <- PCA(env_data_m,
+                 quali.sup = 1,
                  graph = FALSE)
 
-# contribution of variables
-fviz_contrib(pca_model, choice = "var")
+fviz_contrib(pca_model, "var")
 
 
 ```
 
 
 
-# Figure S3 {-}
-```{r echo=FALSE}
-names.window <- c('1-intial growing','2-leaf expansion I','3-leaf expansion II','4-flowering','5-grain filling', "")
+
+```{r}
+id_var <- names(env_data)[11:ncol(env_data)]
+
+names.window <- c('May','June','July','August','September', "October")
 
 out <- 
-  env_typing(env.data = env_data,
-             env.id = "env",
-             var.id = c("sihs", "tmax", "tmin", "dbp", "etp", "vpd", "rh"),
+  env_data |> 
+  select(-c(env, year)) |> 
+  rename(env = me) |> 
+  env_typing(env.id = "env",
+             var.id = id_var,
              by.interval = TRUE,
              time.window = c(0, 15, 35, 65, 90, 120),
-             names.window = names.window)
-
-mes <- 
-  distinct(df_traits, ENV, .keep_all = TRUE) |> 
-  select(ENV, me)
-
-out2 <- 
-  separate(out,
-           env.variable,
+             names.window = names.window,
+             quantiles = c(.01, .25, .50, .75, .975, .99)) |> 
+  separate(env.variable,
            into = c("var", "freq"),
            sep = "_",
-           extra = "drop") |> 
-  left_join(mes, by = c("env" = "ENV"))
+           extra = "drop")
 
 ```
 
 
-```{r echo=FALSE, fig.cap="Quantiles for deficit by precipitation observed in the studied environments (a) and mega-environments (b) across distinct crop stages.", fig.width=13, fig.height=7}
 
+# Figure S2
+
+```{r fig.cap="Quantiles for Extraterrestrial radiation over six months observed in the delineated mega-environments", fig.width=13, fig.height=4}
 # plot the distribution of envirotypes for dbp
-variable <- "dbp"
-p1 <- 
-  out2 |> 
+variable <- "RTA"
+# p1 <-
+out |> 
   subset(var == variable) |> # change the variable here
-  as_factor(freq) |> 
-  mutate(freq = fct_relevel(freq, "(-2.25,48.9]", "(-7.62,-2.25]", "(-9.94,-7.62]", "(-13.1,-9.94]")) |> 
+  mutate(interval = fct_relevel(interval, month.name[5:10])) |> 
   ggplot() + 
   geom_bar(aes(x=Freq, y=env,fill=freq), 
            position = "fill",
@@ -170,63 +192,33 @@ p1 <-
            width = 1,
            color = "white",
            size=.2)+
-  facet_grid(me~interval, scales = "free", space = "free")+ 
+  facet_wrap(~interval, scales = "free", nrow = 6)+ 
   scale_y_discrete(expand = c(0,0))+
   scale_x_continuous(expand = c(0,0))+
-  xlab('Relative frequency of the deficit by precipitation')+ 
-  ylab("Environment")+
-  labs(fill='Envirotype')+
+  labs(x = 'Relative frequency',
+       y = "Mega-Environment",
+       fill='Envirotype')+
   theme(axis.title = element_text(size=12),
         legend.text = element_text(size=9),
         strip.text = element_text(size=12),
         legend.title = element_text(size=12),
-        strip.background = element_rect(fill="gray95",size=1),
-        legend.position = 'bottom')
+        strip.background = element_rect(fill="gray95",size=1)) +
+  ggthemes::scale_fill_stata()
 
-# by mega environment
-p2 <- 
-  out2 |> 
-  subset(var == variable) |> # change the variable here
-  sum_by(me, freq, interval) |> 
-  as_factor(freq) |> 
-  mutate(freq = fct_relevel(freq, "(-2.25,48.9]", "(-7.62,-2.25]", "(-9.94,-7.62]", "(-13.1,-9.94]")) |> 
-  ggplot() + 
-  geom_bar(aes(x=Freq, y=me,fill=freq), 
-           position = "fill",
-           stat = "identity",
-           width = 1,
-           color = "white",
-           size=.2)+
-  facet_wrap(~interval, nrow = 1)+ 
-  scale_y_discrete(expand = c(0,0))+
-  scale_x_continuous(expand = c(0,0))+
-  xlab('Relative frequency of the deficit by precipitation')+ 
-  ylab("Mega\nenvironment")+
-  labs(fill='Envirotype')+
-  theme(axis.title = element_text(size=12),
-        legend.text = element_text(size=9),
-        strip.text = element_text(size=12),
-        legend.title = element_text(size=12),
-        strip.background = element_rect(fill="gray95",size=1),
-        legend.position = 'bottom') +
-  scale_fill_discrete(direction = 1)
 
-arrange_ggplot(p1, p2, 
-               heights = c(0.85, 0.15),
-               tag_levels = "a",
-               guides = "collect")
 ```
 
 
-# Figure S4 {-}
 
-```{r echo=FALSE, fig.cap="Quantiles of maximum temperature observed in the studied environments (a) and mega-environments (b) across distinct crop stages.", fig.width=13, fig.height=7}
 
+# Figure S3
+```{r fig.cap="Quantiles for daylight hours over six months observed in the delineated mega-environments", fig.width=13, fig.height=4}
 # plot the distribution of envirotypes for dbp
-variable <- "tmax"
-p1 <- 
-  out2 |> 
+variable <- "N"
+# p1 <-
+out |> 
   subset(var == variable) |> # change the variable here
+  mutate(interval = fct_relevel(interval, month.name[5:10])) |> 
   ggplot() + 
   geom_bar(aes(x=Freq, y=env,fill=freq), 
            position = "fill",
@@ -234,65 +226,30 @@ p1 <-
            width = 1,
            color = "white",
            size=.2)+
-  facet_grid(me~interval, scales = "free", space = "free")+ 
+  facet_wrap(~interval, scales = "free", nrow = 6)+ 
   scale_y_discrete(expand = c(0,0))+
   scale_x_continuous(expand = c(0,0))+
-  xlab('Relative frequency of the maximum temperature (ºC)')+ 
-  ylab("Environment")+
-  labs(fill='Envirotype')+
+  labs(x = 'Relative frequency',
+       y = "Mega-Environment",
+       fill='Envirotype')+
   theme(axis.title = element_text(size=12),
         legend.text = element_text(size=9),
         strip.text = element_text(size=12),
         legend.title = element_text(size=12),
-        strip.background = element_rect(fill="gray95",size=1),
-        legend.position = 'bottom')
-
-# by mega environment
-p2 <- 
-  out2 |> 
-  subset(var == variable) |> # change the variable here
-  sum_by(me, freq, interval) |> 
-  ggplot() + 
-  geom_bar(aes(x=Freq, y=me,fill=freq), 
-           position = "fill",
-           stat = "identity",
-           width = 1,
-           color = "white",
-           size=.2)+
-  facet_wrap(~interval, nrow = 1)+ 
-  scale_y_discrete(expand = c(0,0))+
-  scale_x_continuous(expand = c(0,0))+
-  xlab('Relative frequency of the maximum temperature (ºC)')+ 
-  ylab("Mega\nEnvironment")+
-  labs(fill='Envirotype')+
-  theme(axis.title = element_text(size=12),
-        legend.text = element_text(size=9),
-        strip.text = element_text(size=12),
-        legend.title = element_text(size=12),
-        strip.background = element_rect(fill="gray95",size=1),
-        legend.position = 'bottom') +
-  scale_fill_discrete(direction = 1)
-
-arrange_ggplot(p1, p2, 
-               heights = c(0.85, 0.15),
-               tag_levels = "a",
-               guides = "collect")
+        strip.background = element_rect(fill="gray95",size=1)) +
+  ggthemes::scale_fill_stata()
 
 ```
 
 
 
-
-
-# Figure S5 {-}
-
-```{r echo=FALSE, fig.cap="Quantiles of minimum temperature observed in the studied environments (a) and mega-environments (b) across distinct crop stages.", fig.width=13, fig.height=7}
-
-# plot the distribution of envirotypes for dbp
-variable <- "tmin"
-p1 <- 
-  out2 |> 
+# Figure S4
+```{r fig.cap="Quantiles for deficit by precipitation over six months observed in the delineated mega-environments", fig.width=13, fig.height=4}
+variable <- "PETP"
+# p1 <-
+out |> 
   subset(var == variable) |> # change the variable here
+  mutate(interval = fct_relevel(interval, month.name[5:10])) |> 
   ggplot() + 
   geom_bar(aes(x=Freq, y=env,fill=freq), 
            position = "fill",
@@ -300,287 +257,147 @@ p1 <-
            width = 1,
            color = "white",
            size=.2)+
-  facet_grid(me~interval, scales = "free", space = "free")+ 
+  facet_wrap(~interval, scales = "free", nrow = 6)+ 
   scale_y_discrete(expand = c(0,0))+
   scale_x_continuous(expand = c(0,0))+
-  xlab('Relative frequency of the minimum temperature (ºC)')+ 
-  ylab("Environment")+
-  labs(fill='Envirotype')+
+  labs(x = 'Relative frequency',
+       y = "Mega-Environment",
+       fill='Envirotype')+
   theme(axis.title = element_text(size=12),
         legend.text = element_text(size=9),
         strip.text = element_text(size=12),
         legend.title = element_text(size=12),
-        strip.background = element_rect(fill="gray95",size=1),
-        legend.position = 'bottom')
+        strip.background = element_rect(fill="gray95",size=1)) +
+  ggthemes::scale_fill_stata()
 
-# by mega environment
-p2 <- 
-  out2 |> 
+
+
+```
+
+
+
+
+
+# Figure S5
+```{r fig.cap="Quantiles for vapor pressure deficit over six months observed in the delineated mega-environments", fig.width=13, fig.height=4}
+variable <- "VPD"
+# p1 <-
+out |> 
   subset(var == variable) |> # change the variable here
-  sum_by(me, freq, interval) |> 
+  mutate(interval = fct_relevel(interval, month.name[5:10])) |> 
   ggplot() + 
-  geom_bar(aes(x=Freq, y=me,fill=freq), 
+  geom_bar(aes(x=Freq, y=env,fill=freq), 
            position = "fill",
            stat = "identity",
            width = 1,
            color = "white",
            size=.2)+
-  facet_wrap(~interval, nrow = 1)+ 
+  facet_wrap(~interval, scales = "free", nrow = 6)+ 
   scale_y_discrete(expand = c(0,0))+
   scale_x_continuous(expand = c(0,0))+
-  xlab('Relative frequency of the minimum temperature (ºC)')+ 
-  ylab("Mega\nEnvironment")+
-  labs(fill='Envirotype')+
+  labs(x = 'Relative frequency',
+       y = "Mega-Environment",
+       fill='Envirotype')+
   theme(axis.title = element_text(size=12),
         legend.text = element_text(size=9),
         strip.text = element_text(size=12),
         legend.title = element_text(size=12),
-        strip.background = element_rect(fill="gray95",size=1),
-        legend.position = 'bottom') +
-  scale_fill_discrete(direction = 1)
-
-arrange_ggplot(p1, p2, 
-               heights = c(0.85, 0.15),
-               tag_levels = "a",
-               guides = "collect")
+        strip.background = element_rect(fill="gray95",size=1)) +
+  ggthemes::scale_fill_stata()
 
 ```
+
+
+
+
+
 
 
 
 # Figure S6 {-}
+```{r fig.width=12, fig.cap="Phenotypic correlation between the studied traits within ME1 (A), ME2 (B), and ME3 (C), and ME4 (D).", echo=FALSE}
 
-```{r echo=FALSE, fig.cap="Quantiles of relative humidity observed in the studied environments (a) and mega-environments (b) across distinct crop stages.", fig.width=13, fig.height=7}
+mgidi_mod <- readRDS("data/mgidi.Rdata")
+c1 <- mgidi_mod$mgidi[[1]]$cormat
+c2 <- mgidi_mod$mgidi[[2]]$cormat
+c3 <- mgidi_mod$mgidi[[3]]$cormat
+c4 <- mgidi_mod$mgidi[[4]]$cormat
 
-# plot the distribution of envirotypes for dbp
-variable <- "rh"
-p1 <- 
-  out2 |> 
-  subset(var == variable) |> # change the variable here
-  ggplot() + 
-  geom_bar(aes(x=Freq, y=env,fill=freq), 
-           position = "fill",
-           stat = "identity",
-           width = 1,
-           color = "white",
-           size=.2)+
-  facet_grid(me~interval, scales = "free", space = "free")+ 
-  scale_y_discrete(expand = c(0,0))+
-  scale_x_continuous(expand = c(0,0))+
-  xlab('Relative frequency of the relative humidity (%)')+ 
-  ylab("Environment")+
-  labs(fill='Envirotype')+
-  theme(axis.title = element_text(size=12),
-        legend.text = element_text(size=9),
-        strip.text = element_text(size=12),
-        legend.title = element_text(size=12),
-        strip.background = element_rect(fill="gray95",size=1),
-        legend.position = 'bottom')
 
-# by mega environment
-p2 <- 
-  out2 |> 
-  subset(var == variable) |> # change the variable here
-  sum_by(me, freq, interval) |> 
-  ggplot() + 
-  geom_bar(aes(x=Freq, y=me,fill=freq), 
-           position = "fill",
-           stat = "identity",
-           width = 1,
-           color = "white",
-           size=.2)+
-  facet_wrap(~interval, nrow = 1)+ 
-  scale_y_discrete(expand = c(0,0))+
-  scale_x_continuous(expand = c(0,0))+
-  xlab('Relative frequency of the relative humidity (%)')+ 
-  ylab("Mega\nEnvironment")+
-  labs(fill='Envirotype')+
-  theme(axis.title = element_text(size=12),
-        legend.text = element_text(size=9),
-        strip.text = element_text(size=12),
-        legend.title = element_text(size=12),
-        strip.background = element_rect(fill="gray95",size=1),
-        legend.position = 'bottom') +
-  scale_fill_discrete(direction = 1)
+corM1p <- 
+  c1 |>
+  network_plot(legend_position = "bottom",
+               min_cor = 0.3)
+corM2p <- 
+  c2 |>
+  network_plot(legend_position = "bottom",
+               min_cor = 0.3)
+corM3p <- 
+  c3 |>
+  network_plot(legend_position = "bottom",
+               min_cor = 0.3)
+corM4p <- 
+  c4 |>
+  network_plot(legend_position = "bottom",
+               min_cor = 0.3)
 
-arrange_ggplot(p1, p2, 
-               heights = c(0.85, 0.15),
-               tag_levels = "a",
-               guides = "collect")
 
+arrange_ggplot(corM1p, corM2p, corM3p, corM4p,
+               guides = "collect",
+               tag_levels = "A")
+
+bind_cols(corr_focus(c1, GY) |> rename(GY_ME1 = GY), 
+          corr_focus(c2, GY)[,2] |> rename(GY_ME2 = GY),
+          corr_focus(c3, GY)[,2] |> rename(GY_ME3 = GY),
+          corr_focus(c4, GY)[,2] |> rename(GY_ME4 = GY)) 
 ```
-
-
 
 # Figure S7 {-}
+```{r fig.cap="Mantel's correlation between the phenotypic correlation matrices observed in each mega-environment", echo=FALSE}
 
-```{r echo=FALSE, fig.cap="Quantiles of all sky insolation incident on a horizontal surface observed in the studied environments (a) and mega-environments (b) across distinct crop stages.", fig.width=13, fig.height=7}
-
-# plot the distribution of envirotypes for dbp
-variable <- "sihs"
-p1 <- 
-  out2 |> 
-  subset(var == variable) |> # change the variable here
-  ggplot() + 
-  geom_bar(aes(x=Freq, y=env,fill=freq), 
-           position = "fill",
-           stat = "identity",
-           width = 1,
-           color = "white",
-           size=.2)+
-  facet_grid(me~interval, scales = "free", space = "free")+ 
-  scale_y_discrete(expand = c(0,0))+
-  scale_x_continuous(expand = c(0,0))+
-  xlab('Relative frequency of the all sky insolation incident on a horizontal surface')+ 
-  ylab("Environment")+
-  labs(fill='Envirotype')+
-  theme(axis.title = element_text(size=12),
-        legend.text = element_text(size=9),
-        strip.text = element_text(size=12),
-        legend.title = element_text(size=12),
-        strip.background = element_rect(fill="gray95",size=1),
-        legend.position = 'bottom')
-
-# by mega environment
-p2 <- 
-  out2 |> 
-  subset(var == variable) |> # change the variable here
-  sum_by(me, freq, interval) |> 
-  ggplot() + 
-  geom_bar(aes(x=Freq, y=me,fill=freq), 
-           position = "fill",
-           stat = "identity",
-           width = 1,
-           color = "white",
-           size=.2)+
-  facet_wrap(~interval, nrow = 1)+ 
-  scale_y_discrete(expand = c(0,0))+
-  scale_x_continuous(expand = c(0,0))+
-  xlab('Relative frequency of the all sky insolation incident on a horizontal surface')+ 
-  ylab("Mega\nEnvironment")+
-  labs(fill='Envirotype')+
-  theme(axis.title = element_text(size=12),
-        legend.text = element_text(size=9),
-        strip.text = element_text(size=12),
-        legend.title = element_text(size=12),
-        strip.background = element_rect(fill="gray95",size=1),
-        legend.position = 'bottom') +
-  scale_fill_discrete(direction = 1)
-
-arrange_ggplot(p1, p2, 
-               heights = c(0.85, 0.15),
-               tag_levels = "a",
-               guides = "collect")
-
-```
-
-
-
-
-```{r echo=FALSE}
-mod_global <- readRDS("data/mod_global.RData")
-## mtsi global
-SI <- 25
-mtsi_global <- mtsi(mod_global, SI = SI, verbose = FALSE)
-sel_gen <- mtsi_global$sel_gen
-```
-
-
-
-```{r echo=FALSE}
-mod_me <- readRDS("data/mod_me.RData")
-```
-
-
-
-```{r include=FALSE}
-## mtsi me1
-mtsi_me1 <- mtsi(mod_me$data[[1]], SI = SI, verbose = FALSE)
-## mtsi me2
-mtsi_me2 <- mtsi(mod_me$data[[2]], SI = SI, verbose = FALSE)
-## mtsi me3
-mtsi_me3 <- mtsi(mod_me$data[[3]], SI = SI, verbose = FALSE)
-
+pairs_mantel(as.lpcor(c1, c2, c3, c4),
+             names = c("ME1", "ME2", "ME3", "ME4"))
 ```
 
 
 
 # Figure S8 {-}
-```{r fig.width=12, fig.cap="Phenotypic correlation between the studied traits within ME1 (a), ME2 (b), and ME3 (c).", echo=FALSE}
-
-corM1 <- gmd(mod_me$data[[1]], "pcor")
-
-
-corM1p <- 
-  corM1 |>
-  network_plot(legend_position = "bottom",
-               min_cor = 0.2)
-
-corM2 <-  gmd(mod_me$data[[2]], "pcor")
-corM2p <- 
-  corM2 |>
-  network_plot(legend_position = "bottom",
-               min_cor = 0.2)
-corM3 <-  gmd(mod_me$data[[3]], "pcor")
-corM3p <- 
-  corM3 |>
-  network_plot(legend_position = "bottom",
-               min_cor = 0.2)
-
-arrange_ggplot(corM1p, corM2p, corM3p,
-               guides = "collect",
-               tag_levels = "a")
-
-bind_cols(corr_focus(corM1, GY) |> rename(GY_ME1 = GY), 
-          corr_focus(corM2, GY)[,2] |> rename(GY_ME2 = GY),
-          corr_focus(corM3, GY)[,2] |> rename(GY_ME3 = GY))
-```
-
-# Figure S9 {-}
-```{r fig.cap="Mantel's correlation between the phenotypic correlation matrices observed in each mega-environment", echo=FALSE}
-
-pairs_mantel(as.lpcor(corM1, corM2, corM3),
-             names = c("ME1", "ME2", "ME3"))
-```
-
-
-
-# Figure S10  {-}
 ```{r fig.width=10, fig.height=10, fig.cap="The strengths and weaknesses view of the selected genotypes is shown as the proportion of each factor on the computed multi-trait stability index (MTSI). The smallest the proportion explained by a factor (closer to the external edge), the closer the traits within that factor are to the ideotype. The dashed line shows the theoretical value if all the factors had contributed equally.", echo=FALSE}
 
-m1 <- plot(mtsi_global, type = "contribution")
-m2 <- plot(mtsi_me1, type = "contribution")
-m3 <- plot(mtsi_me2, type = "contribution")
-m4 <- plot(mtsi_me3, type = "contribution")
+m1 <- plot(mgidi_mod$mgidi[[1]], type = "contribution")
+m2 <- plot(mgidi_mod$mgidi[[2]], type = "contribution")
+m3 <- plot(mgidi_mod$mgidi[[3]], type = "contribution")
+m4 <- plot(mgidi_mod$mgidi[[4]], type = "contribution")
 
 arrange_ggplot(m1, m2, m3, m4,
-               tag_levels = "a",
+               tag_levels = "A",
                ncol = 2)
 ```
 
 
 
-# Figure S11 {- .panelset}
+# Figure S9 {- .panelset}
 
-## ALL  {-}
+## ME1  {-}
 
-```{r fig.width=10, fig.height=6, fig.cap="Average value for the studied trait considerig all the environments", echo=FALSE}
-ALL <- mtsi_global$sel_gen
-ME1 <- mtsi_me1$sel_gen
-ME2 <- mtsi_me2$sel_gen
-ME3 <- mtsi_me3$sel_gen
+```{r fig.width=10, fig.height=6, fig.cap="Average value for the studied trait across ME1", echo=FALSE}
+ME1 <- mgidi_mod$mgidi[[1]]$sel_gen
+ME2 <- mgidi_mod$mgidi[[2]]$sel_gen
+ME3 <- mgidi_mod$mgidi[[3]]$sel_gen
+ME4 <- mgidi_mod$mgidi[[4]]$sel_gen
 
-mean_all <- 
+mean_me1 <- 
   df_traits |> 
+    filter(ME == "ME1") |> 
   pivot_longer(GMC:HSW) |> 
-  mutate(selected = ifelse(GEN %in% ALL, "selected", "non-selected"),
+  mutate(selected = ifelse(GEN %in% ME1, "selected", "non-selected"),
          sense = ifelse(name %in% c("BTL", "EH", "GMC", "PH"),
                         "reduce", "increase"),
          GEN = fct_relevel(GEN, paste0("G", 1:26)))
-mean_traits_all <- means_by(mean_all, name, sense)
+mean_traits_all <- mean_by(mean_me1, name, sense)
 
 
-ggplot(mean_all, aes(value, GEN)) +
+ggplot(mean_me1, aes(value, GEN)) +
   geom_boxplot(aes(fill = selected),
                outlier.colour = "transparent",
                size = 0.1) +
@@ -598,50 +415,18 @@ ggplot(mean_all, aes(value, GEN)) +
 ```
 
 
-## ME1  {-}
-
-```{r fig.width=10, fig.height=6, fig.cap="Average value for the studied trait across ME1", echo=FALSE}
-mean_me1 <- 
-  df_traits |> 
-  filter(me == "ME1") |> 
-  pivot_longer(GMC:HSW) |> 
-  mutate(selected = ifelse(GEN %in% ME1, "selected", "non-selected"),
-         sense = ifelse(name %in% c("BTL", "EH", "GMC", "PH"),
-                        "reduce", "increase"),
-         GEN = fct_relevel(GEN, paste0("G", 1:26)))
-mean_traits_me1 <- means_by(mean_me1, name, sense)
-
-
-ggplot(mean_me1, aes(value, GEN)) +
-  geom_boxplot(aes(fill = selected),
-               outlier.colour = "transparent",
-               size = 0.1) +
-  stat_summary(fun = mean,
-               geom = "point",
-               shape = "diamond") +
-  facet_nested(~sense+name, scales  = "free_x") +
-  geom_vline(aes(xintercept = value),
-             data = mean_traits_me1,
-             color = "blue") +
-  labs(x = "Observed value (average)",
-       y = "Genotypes") +
-  theme(legend.position = "bottom") +
-  my_theme
-```
-
-
 ## ME2  {-}
 
 ```{r fig.width=10, fig.height=6, fig.cap="Average value for the studied trait across ME2", echo=FALSE}
 mean_me2 <- 
   df_traits |> 
-  filter(me == "ME2") |> 
+  filter(ME == "ME2") |> 
   pivot_longer(GMC:HSW) |> 
   mutate(selected = ifelse(GEN %in% ME2, "selected", "non-selected"),
          sense = ifelse(name %in% c("BTL", "EH", "GMC", "PH"),
                         "reduce", "increase"),
          GEN = fct_relevel(GEN, paste0("G", 1:26)))
-mean_traits_me2 <- means_by(mean_me2, name, sense)
+mean_traits_me2 <- mean_by(mean_me2, name, sense)
 
 
 ggplot(mean_me2, aes(value, GEN)) +
@@ -654,25 +439,26 @@ ggplot(mean_me2, aes(value, GEN)) +
   facet_nested(~sense+name, scales  = "free_x") +
   geom_vline(aes(xintercept = value),
              data = mean_traits_me2,
-             linetype = 2) +
+             color = "blue") +
   labs(x = "Observed value (average)",
        y = "Genotypes") +
   theme(legend.position = "bottom") +
   my_theme
 ```
 
+
 ## ME3  {-}
 
 ```{r fig.width=10, fig.height=6, fig.cap="Average value for the studied trait across ME3", echo=FALSE}
 mean_me3 <- 
   df_traits |> 
-  filter(me == "ME3") |> 
+  filter(ME == "ME3") |> 
   pivot_longer(GMC:HSW) |> 
   mutate(selected = ifelse(GEN %in% ME3, "selected", "non-selected"),
          sense = ifelse(name %in% c("BTL", "EH", "GMC", "PH"),
                         "reduce", "increase"),
          GEN = fct_relevel(GEN, paste0("G", 1:26)))
-mean_traits_me3 <- means_by(mean_me3, name, sense)
+mean_traits_me3 <- mean_by(mean_me3, name, sense)
 
 
 ggplot(mean_me3, aes(value, GEN)) +
@@ -685,6 +471,37 @@ ggplot(mean_me3, aes(value, GEN)) +
   facet_nested(~sense+name, scales  = "free_x") +
   geom_vline(aes(xintercept = value),
              data = mean_traits_me3,
+             linetype = 2) +
+  labs(x = "Observed value (average)",
+       y = "Genotypes") +
+  theme(legend.position = "bottom") +
+  my_theme
+```
+
+## ME4  {-}
+
+```{r fig.width=10, fig.height=6, fig.cap="Average value for the studied trait across ME4", echo=FALSE}
+mean_me4 <- 
+  df_traits |> 
+  filter(ME == "ME4") |> 
+  pivot_longer(GMC:HSW) |> 
+  mutate(selected = ifelse(GEN %in% ME4, "selected", "non-selected"),
+         sense = ifelse(name %in% c("BTL", "EH", "GMC", "PH"),
+                        "reduce", "increase"),
+         GEN = fct_relevel(GEN, paste0("G", 1:26)))
+mean_traits_me4 <- means_by(mean_me4, name, sense)
+
+
+ggplot(mean_me4, aes(value, GEN)) +
+  geom_boxplot(aes(fill = selected),
+               outlier.colour = "transparent",
+               size = 0.1) +
+  stat_summary(fun = mean,
+               geom = "point",
+               shape = "diamond") +
+  facet_nested(~sense+name, scales  = "free_x") +
+  geom_vline(aes(xintercept = value),
+             data = mean_traits_me4,
              color = "blue") +
   labs(x = "Observed value (average)",
        y = "Genotypes") +
@@ -694,16 +511,16 @@ ggplot(mean_me3, aes(value, GEN)) +
 
 
 
-# Figure S12  {-}
+# Figure S10  {-}
 ```{r fig.width=12, fig.height=8, echo=FALSE}
-ge_plot(df_traits, ENV, GEN, GY,
+ge_plot(df_traits, LOC, GEN, GY,
         order_g = paste0("G", 1:26))
 ```
 
 
-# Figure S13  {-}
+# Figure S11  {-}
 ```{r fig.width=12, fig.height=6, echo=FALSE}
-ge_plot(df_traits, me, GEN, GY,
+ge_plot(df_traits, ME, GEN, GY,
         order_g = paste0("G", 1:26))
 ```
 
