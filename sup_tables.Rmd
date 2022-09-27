@@ -117,34 +117,35 @@ print_table(variances, caption = "Eigenvalues and explained variance for the fac
 
 
 
-# Table S3 {-}
 ```{r echo=FALSE}
-loadings <-
+factors <-
   list(
-    ME1 = gmd(mgidi_mod$mgidi[[1]], "FA"),
-    ME2 = gmd(mgidi_mod$mgidi[[2]], "FA"),
-    ME3 = gmd(mgidi_mod$mgidi[[3]], "FA"),
-    ME4 = gmd(mgidi_mod$mgidi[[4]], "FA")
+    ME1 = gmd(mgidi_mod$mgidi[[1]], "sel_dif"),
+    ME2 = gmd(mgidi_mod$mgidi[[2]], "sel_dif"),
+    ME3 = gmd(mgidi_mod$mgidi[[3]], "sel_dif"),
+    ME4 = gmd(mgidi_mod$mgidi[[4]], "sel_dif")
   ) |>
-  bind_rows(.id = "model")
-
-print_table(loadings, caption = "Factorial loadings after varimax rotation, and communalities obtained in the factor analysis within each mega-environments (ME1, ME2, ME3, and ME4).")
-
+  bind_rows(.id = "model") |> 
+  select(model, VAR, Factor) |> 
+  rename(ME = model, TRAIT = VAR)
 ```
 
 
 
 
-# Table S4 {-}
+# Table S3 {-}
 ```{r echo=FALSE}
-gains <- import("data/gains.xlsx")
+gains <- 
+  import("data/gains.xlsx") |> 
+  left_join(factors) |> 
+  relocate(Factor, .after = TRAIT) |> 
+  arrange(ME, Factor)
 
 gains |> 
-  set_names(c("ME", "TRAIT", "Xo", "Xs", "SD", "Xo", "Xs", "SD")) |> 
+  set_names(c("ME", "TRAIT", "Factor", "Xo", "Xs", "SD", "Xo", "Xs", "SD")) |> 
   print_table(caption = "Selecion differentials for mean performance and stability of the studied traits in the four delineated mega environments.") |> 
-  add_header_above(c(" " = 2, "Mean performance" = 3, "Stability" = 3),
+  add_header_above(c(" " = 3, "Mean performance" = 3, "Stability" = 3),
                    align = "l")
-
 
 ```
 
