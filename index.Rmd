@@ -1,6 +1,6 @@
 <!-- % About -->
 # <i class="fas fa-glasses"></i>About {-}
-In this website are available the data and scripts used in the manuscript *Mega-environment delineation using climate information improved gains in multi-trait selection of maize across Huanghuaihai plain in China*
+In this website are available the data and scripts used in the manuscript *Multi-trait selection for mean performance and stability of maize hybrids in mega-environments delineated using envitotyping techniques*
 
 
 # <i class="fas fa-code"></i>How to reproduce? {-}

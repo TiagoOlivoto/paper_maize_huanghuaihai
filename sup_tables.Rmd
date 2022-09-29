@@ -110,7 +110,7 @@ variances <-
   ) |>
   bind_rows(.id = "model")
 
-print_table(variances, caption = "Eigenvalues and explained variance for the factor analysis acroos all environments (ALL) and within each mega-environments (ME1, ME2, ME3, and ME4).")
+print_table(variances, caption = "Eigenvalues and explained variance for the factor analysis within each mega-environments (ME1, ME2, ME3, and ME4).")
 
 ```
 

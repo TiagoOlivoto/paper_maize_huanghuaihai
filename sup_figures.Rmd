@@ -37,9 +37,9 @@ my_theme <-
 ```
 
 
-# Figure S1
+# Figure S1 {-}
 
-```{r echo=FALSE, fig.cap="NASA/POWER estimates vs observed values. (A) Relationship between NASA/POWER estimates and observed values (Shenzhou) for daylight hours (n), rainfall precipitation (prec), relative humidity (rh), maximum air temperature (tmax), average air temperature (tmed), and minimum air temperature (tmin); (B) NASA/POWER vs observed values for accumulated rainfall in three different locations.", fig.width=7, fig.height=9, message=FALSE, warning=FALSE}
+```{r echo=FALSE, fig.cap="NASA/POWER estimates vs observed values. (A) Relationship between NASA/POWER estimates and observed values (observed in Shenzhou) for daylight hours (n), rainfall precipitation (prec), relative humidity (rh), maximum air temperature (tmax), average air temperature (tmed), and minimum air temperature (tmin); (B) NASA/POWER vs observed values for accumulated rainfall in three different locations.", fig.width=7, fig.height=9, message=FALSE, warning=FALSE}
 real <- 
   import("data/real_climate_data.xlsx") |> 
   mutate(data = ymd(data))
@@ -67,14 +67,15 @@ correlation <-
   dplyr::select(env, data, matches("real|np")) |> 
   pivot_longer(-c(env, data)) |> 
   separate(name, into = c("var", "method")) |> 
-  pivot_wider(names_from = method, values_from = value)
+  pivot_wider(names_from = method, values_from = value) |> 
+  separate(data, into = c("year")) 
 
 
 cc1 <- 
-  ggplot(correlation, aes(np, real)) + 
+  ggplot(correlation, aes(np, real, color = year)) + 
   facet_wrap(~var, scales = "free") +
-  geom_point(size = 2, alpha = 0.6) +
-  geom_smooth(method = "lm") +
+  geom_point(size = 3, alpha = 0.5) +
+  geom_smooth(method = "lm", se = FALSE) +
   labs(x = "NASA/POWER estimates",
        y = "Observed values") +
   my_theme
@@ -91,6 +92,7 @@ expand_grid(location = c("Shenzhou", "Gaocheng", "Handan"),
             position = position_dodge(width = 0.9),
             vjust = -0.5) +
   facet_wrap(~year) +
+  scale_y_continuous(expand = expansion(c(0.05, 0.2))) +
   labs(x = "Location",
        y = "Accumulated Rainfall precipitation (mm)") +
   my_theme
@@ -145,7 +147,7 @@ df_var_gy <-
 
 
 
-# Figure S2
+# Figure S2 {-}
 
 ```{r echo=FALSE, fig.cap="biplot", message=FALSE, warning=FALSE}
 env_data <- 
@@ -201,7 +203,7 @@ out <-
 
 
 
-# Figure S3
+# Figure S3 {-}
 
 ```{r  echo=FALSE, fig.cap="Quantiles for Extraterrestrial radiation over six months observed in the delineated mega-environments", fig.width=10, fig.height=9}
 # plot the distribution of envirotypes for dbp
@@ -236,7 +238,7 @@ out |>
 
 
 
-# Figure S4
+# Figure S4 {-}
 ```{r  echo=FALSE, fig.cap="Quantiles for daylight hours over six months observed in the delineated mega-environments", fig.width=10, fig.height=9}
 # plot the distribution of envirotypes for dbp
 variable <- "N"
@@ -268,7 +270,7 @@ out |>
 
 
 
-# Figure S5
+# Figure S5 {-}
 ```{r  echo=FALSE, fig.cap="Quantiles for deficit by precipitation over six months observed in the delineated mega-environments", fig.width=10, fig.height=9}
 variable <- "PETP"
 # p1 <-
@@ -303,7 +305,7 @@ out |>
 
 
 
-# Figure S6
+# Figure S6 {-}
 ```{r  echo=FALSE, fig.cap="Quantiles for vapor pressure deficit over six months observed in the delineated mega-environments", fig.width=10, fig.height=9}
 variable <- "VPD"
 # p1 <-
@@ -522,7 +524,7 @@ ggplot(mean_me4, aes(value, GEN)) +
 
 
 # Figure S10  {-}
-```{r fig.width=12, fig.height=8, echo=FALSE}
+```{r fig.width=12, fig.height=8, echo=FALSE, fig.cap="Heatmap showing the average yield of the studied genotypes in each combination of mega-environment and year"}
 df_traits |> 
   concatenate(ME, YEAR, new_var = ENV) |> 
   ge_plot(ENV, GEN, GY,
@@ -531,14 +533,14 @@ df_traits |>
 
 
 # Figure S11  {-}
-```{r fig.width=12, fig.height=6, echo=FALSE}
+```{r fig.width=12, fig.height=6, echo=FALSE, fig.cap="Heatmap showing the average yield of the studied genotypes in each mega-environment"}
 ge_plot(df_traits, ME, GEN, GY,
         order_g = paste0("G", 1:26))
 ```
 
 
 # Figure S12  {-}
-```{r echo=FALSE,fig.cap="Quantiles for minimum air temperature (A) and maximum air temperature (B) observed in the studied mega-environments across distinct crop stages and cultivation years.", fig.width=13, fig.height=8}
+```{r echo=FALSE,fig.cap="Quantiles for maximum air temperature (A), maximum air temperature (B), relative humidity (C), and rainfall precipitation (D) observed in the studied mega-environments across distinct crop stages and cultivation years.", fig.width=13, fig.height=10}
 env_data_trial <- import("data/env_data_trial.xlsx")
 
 
@@ -549,7 +551,7 @@ out <-
   env_data_trial |> 
   concatenate(ME, YEAR, .after = YEAR, new_var = env) |> 
   env_typing(env.id = c("YEAR, ME"),
-             var.id = c("TMIN", "TMAX", "RH"),
+             var.id = c("TMIN", "TMAX", "RH", "PRECTOT"),
              by.interval = TRUE,
              time.window = c(0, 15, 35, 65, 90, 120),
              names.window = names.window,
@@ -648,7 +650,37 @@ p5 <-
 
 
 
-arrange_ggplot(p4, p3, p5,
+# plot the distribution of envirotypes for dbp
+variable <- "PRECTOT"
+p6 <-
+  out |> 
+  subset(var == variable) |> # change the variable here
+  # mutate()
+  ggplot() + 
+  geom_bar(aes(x=Freq, y=ME,fill=freq), 
+           position = "fill",
+           stat = "identity",
+           width = 1,
+           color = "white",
+           size=.2) +
+  facet_grid(YEAR~interval) + 
+  scale_y_discrete(expand = c(0,0))+
+  scale_x_continuous(expand = c(0,0))+
+  labs(x = 'Relative frequency',
+       y = "Mega-Environment",
+       fill='Envirotype')+
+  theme(axis.title = element_text(size=12),
+        legend.text = element_text(size=9),
+        strip.text = element_text(size=12),
+        legend.title = element_text(size=12),
+        strip.background = element_rect(fill="gray95",size=1)) +
+  ggthemes::scale_fill_stata()
+
+
+
+
+
+arrange_ggplot(p4, p3, p5, p6,
                ncol = 1,
                tag_levels = "A")
 
@@ -658,7 +690,7 @@ arrange_ggplot(p4, p3, p5,
 
 
 # Figure S13  {-}
-```{r echo=FALSE, fig.width=10, fig.height=6, echo=FALSE, fig.cap="Relationhips between rainfall precipitation and grain yield"}
+```{r echo=FALSE, fig.width=10, fig.height=6, echo=FALSE, fig.cap="Relationhips between accumulated rainfall precipitation and grain yield. The different colors shows the mega-environments and the different shapes, the cultivation year."}
 df_gymey <- 
   df_traits |> 
   mean_by(YEAR, LOC) |> 
@@ -683,7 +715,8 @@ ggplot(df_prec, aes(PRECTOT, GY)) +
   geom_point(aes(color = ME, shape = YEAR), size = 4) +
   geom_smooth() +
   labs(x = "Acumulated amount of rain during the experiment (mm)",
-       y = expression(Average~yield~(Mg~ha^{-1})))
+       y = expression(Average~yield~(Mg~ha^{-1}))) +
+  my_theme
 
 ```
 
