@@ -88,9 +88,8 @@ china <-
   mutate(china,
          Province = ifelse(name %in% locs$Province, name, NA))
 
-png("figs/fig1_map1.png", width = 10, height = 7, units = "in", res = 600)
+png("figs/fig1_map1.jpeg", width = 10, height = 7, units = "in", res = 600)
 
-# china <-
 ggplot(data = china) +
   geom_sf(aes(fill = Province), size = 0.2) +
   ggthemes::theme_map() +
@@ -100,7 +99,7 @@ ggplot(data = china) +
 dev.off()
 
 
-png("figs/fig1_map2.png", width = 10, height = 7, units = "in", res = 600)
+png("figs/fig1_map2.jpeg", width = 10, height = 7, units = "in", res = 600)
 
 zoom <-
   ggplot(data = china) +
@@ -121,7 +120,7 @@ zoom <-
                    color = "black",
                    segment.color = 'black',
                    force = 38,
-                   size = 3) +
+                   size = 4) +
   theme(legend.position = c(0.95, 0.1)) +
   theme_minimal() +
   theme(legend.position = c(.95, 0.55)) +
@@ -490,7 +489,7 @@ bip3 <-
 
 arrange_ggplot(bp1, bip1, bip2, bip3,
                tag_levels = "A")
-ggsave("figs/fig3_pca.png", width = 11, height = 11)
+ggsave("figs/fig3_pca.jpeg", width = 11, height = 11)
 
 
 ```
@@ -640,7 +639,7 @@ p4 <-
 arrange_ggplot(p1, p2,
                ncol = 1,
                tag_levels = "A")
-ggsave("figs/fig4_typology_vpd.png", width = 10, height = 5)
+ggsave("figs/fig4_typology_vpd.jpeg", width = 10, height = 5)
 
 ```
 
@@ -735,7 +734,7 @@ ggplot(vcomp, aes(name, variance, fill = group)) +
   labs(x = "Traits",
        y = "Percentage of the total Variance (%)",
        fill = "Source")
-ggsave("figs/fig5_vcomp.png", width = 6, height = 5)
+ggsave("figs/fig5_vcomp.jpeg", width = 6, height = 5)
 
 ```
 
@@ -790,7 +789,7 @@ arrange_ggplot(p1, p2, p3, p4,
                tag_levels = "A",
                ncol = 4)
 
-ggsave("figs/fig6_radar.png", width = 12, height = 4)
+ggsave("figs/fig6_radar.jpeg", width = 12, height = 4)
 
 # selected genotypes
 selm1 <- sel_gen(mgidi$mgidi[[1]])
@@ -804,7 +803,7 @@ venn_plot(selm1, selm2, selm3, selm4,
           show_elements = TRUE) +
   ggthemes::scale_fill_stata()
 
-ggsave("figs/fig7_veen.png", width = 6, height = 5)
+ggsave("figs/fig7_veen.jpeg", width = 6, height = 5)
 ```
 
 
@@ -866,7 +865,7 @@ ggplot(ds_mper, aes(name, sd_perc)) +
         panel.grid.minor = element_blank()) +
   scale_fill_manual(values = ggthemes::stata_pal()(4)[c(2, 3)])
 
-ggsave("figs/fig8_sd_mper.png", width = 14, height = 6)
+ggsave("figs/fig8_sd_mper.jpeg", width = 14, height = 6)
 ```
 
 
@@ -931,7 +930,7 @@ ggplot(ds_stab, aes(name, sd_perc)) +
         legend.title = element_blank(),
         panel.grid.minor = element_blank()) +
   scale_fill_manual(values = ggthemes::stata_pal()(4)[c(2, 3)])
-ggsave("figs/fig9_sd_stab.png", width = 14, height = 6)
+ggsave("figs/fig9_sd_stab.jpeg", width = 14, height = 6)
 
 ```
 
@@ -955,7 +954,7 @@ mod_gge <- gge(mean_yme, ME, GEN, GY)
 
 plot(mod_gge, type = 6)
 
-ggsave("figs/fig10_gge.png", width = 10, height = 5)
+ggsave("figs/fig10_gge.jpeg", width = 10, height = 5)
 ```
 
 

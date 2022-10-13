@@ -231,7 +231,7 @@
         </a>
       </li>
       <li>
-        <a href="https://doi.org/10.5281/zenodo.6986531">
+        <a href="https://doi.org/10.5281/zenodo.7126129">
           <span class="ai ai ai ai-doi ai"></span>
            
           Doi
@@ -373,63 +373,62 @@
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(china,</span>
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">Province =</span> <span class="fu">ifelse</span>(name <span class="sc">%in%</span> locs<span class="sc">$</span>Province, name, <span class="cn">NA</span>))</span>
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="fu">png</span>(<span class="st">&quot;figs/fig1_map1.png&quot;</span>, <span class="at">width =</span> <span class="dv">10</span>, <span class="at">height =</span> <span class="dv">7</span>, <span class="at">units =</span> <span class="st">&quot;in&quot;</span>, <span class="at">res =</span> <span class="dv">600</span>)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="fu">png</span>(<span class="st">&quot;figs/fig1_map1.jpeg&quot;</span>, <span class="at">width =</span> <span class="dv">10</span>, <span class="at">height =</span> <span class="dv">7</span>, <span class="at">units =</span> <span class="st">&quot;in&quot;</span>, <span class="at">res =</span> <span class="dv">600</span>)</span>
 <span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co"># china &lt;-</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> china) <span class="sc">+</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> Province), <span class="at">size =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  ggthemes<span class="sc">::</span><span class="fu">theme_map</span>() <span class="sc">+</span></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_discrete</span>(<span class="at">na.value =</span> <span class="st">&quot;gray97&quot;</span>,</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>                      <span class="at">labels =</span> <span class="fu">c</span>(<span class="fu">unique</span>(locs<span class="sc">$</span>Province), <span class="st">&quot;others&quot;</span>)) <span class="sc">+</span></span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="fu">dev.off</span>()</span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="do">## png </span></span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="do">##   2</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> china) <span class="sc">+</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> Province), <span class="at">size =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  ggthemes<span class="sc">::</span><span class="fu">theme_map</span>() <span class="sc">+</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_discrete</span>(<span class="at">na.value =</span> <span class="st">&quot;gray97&quot;</span>,</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>                      <span class="at">labels =</span> <span class="fu">c</span>(<span class="fu">unique</span>(locs<span class="sc">$</span>Province), <span class="st">&quot;others&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="fu">dev.off</span>()</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="do">## png </span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="do">##   2</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="fu">png</span>(<span class="st">&quot;figs/fig1_map2.png&quot;</span>, <span class="at">width =</span> <span class="dv">10</span>, <span class="at">height =</span> <span class="dv">7</span>, <span class="at">units =</span> <span class="st">&quot;in&quot;</span>, <span class="at">res =</span> <span class="dv">600</span>)</span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>zoom <span class="ot">&lt;-</span></span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">data =</span> china) <span class="sc">+</span></span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> Province), <span class="at">size =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>  ggthemes<span class="sc">::</span><span class="fu">theme_map</span>() <span class="sc">+</span></span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_discrete</span>(<span class="at">na.value =</span> <span class="st">&quot;gray97&quot;</span>,</span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>                      <span class="at">labels =</span> <span class="fu">c</span>(<span class="fu">unique</span>(locs<span class="sc">$</span>Province), <span class="st">&quot;others&quot;</span>)) <span class="sc">+</span></span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> locs,</span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> Lon, <span class="at">y =</span> Lat, <span class="at">size =</span> Altitude),</span>
-<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>             <span class="at">color =</span> <span class="st">&quot;black&quot;</span>,</span>
-<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>             <span class="at">fill =</span> <span class="st">&quot;red&quot;</span>,</span>
-<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>             <span class="at">shape =</span> <span class="dv">21</span>) <span class="sc">+</span></span>
-<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label_repel</span>(<span class="at">data =</span> locs,</span>
-<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">aes</span>(<span class="at">label =</span> Location,</span>
-<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>                       <span class="at">x =</span> Lon,</span>
-<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>                       <span class="at">y =</span> Lat),</span>
-<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>                   <span class="at">fill =</span> <span class="st">&quot;green&quot;</span>,</span>
-<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>                   <span class="at">color =</span> <span class="st">&quot;black&quot;</span>,</span>
-<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>                   <span class="at">segment.color =</span> <span class="st">&#39;black&#39;</span>,</span>
-<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>                   <span class="at">force =</span> <span class="dv">38</span>,</span>
-<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>                   <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(<span class="fl">0.95</span>, <span class="fl">0.1</span>)) <span class="sc">+</span></span>
-<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(.<span class="dv">95</span>, <span class="fl">0.55</span>)) <span class="sc">+</span></span>
-<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scalebar</span>(<span class="at">dist =</span> <span class="dv">200</span>,</span>
-<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>           <span class="at">x.min =</span> <span class="dv">109</span>,</span>
-<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a>           <span class="at">x.max =</span> <span class="dv">128</span>,</span>
-<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a>           <span class="at">y.min =</span> <span class="fl">29.5</span>,</span>
-<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a>           <span class="at">y.max =</span> <span class="dv">42</span>,</span>
-<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a>           <span class="at">dist_unit =</span> <span class="st">&quot;km&quot;</span>,</span>
-<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a>           <span class="at">transform =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>           <span class="at">model =</span> <span class="st">&quot;WGS84&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="fu">c</span>(<span class="dv">109</span>, <span class="dv">128</span>)) <span class="sc">+</span></span>
-<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="fu">c</span>(<span class="dv">28</span>, <span class="dv">42</span>)) <span class="sc">+</span></span>
-<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Longitude&quot;</span>,</span>
-<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Latitude&quot;</span>)</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="fu">png</span>(<span class="st">&quot;figs/fig1_map2.jpeg&quot;</span>, <span class="at">width =</span> <span class="dv">10</span>, <span class="at">height =</span> <span class="dv">7</span>, <span class="at">units =</span> <span class="st">&quot;in&quot;</span>, <span class="at">res =</span> <span class="dv">600</span>)</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>zoom <span class="ot">&lt;-</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">data =</span> china) <span class="sc">+</span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> Province), <span class="at">size =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>  ggthemes<span class="sc">::</span><span class="fu">theme_map</span>() <span class="sc">+</span></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_discrete</span>(<span class="at">na.value =</span> <span class="st">&quot;gray97&quot;</span>,</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>                      <span class="at">labels =</span> <span class="fu">c</span>(<span class="fu">unique</span>(locs<span class="sc">$</span>Province), <span class="st">&quot;others&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> locs,</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> Lon, <span class="at">y =</span> Lat, <span class="at">size =</span> Altitude),</span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>             <span class="at">color =</span> <span class="st">&quot;black&quot;</span>,</span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>             <span class="at">fill =</span> <span class="st">&quot;red&quot;</span>,</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>             <span class="at">shape =</span> <span class="dv">21</span>) <span class="sc">+</span></span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label_repel</span>(<span class="at">data =</span> locs,</span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">aes</span>(<span class="at">label =</span> Location,</span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>                       <span class="at">x =</span> Lon,</span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>                       <span class="at">y =</span> Lat),</span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>                   <span class="at">fill =</span> <span class="st">&quot;green&quot;</span>,</span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>                   <span class="at">color =</span> <span class="st">&quot;black&quot;</span>,</span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>                   <span class="at">segment.color =</span> <span class="st">&#39;black&#39;</span>,</span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>                   <span class="at">force =</span> <span class="dv">38</span>,</span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>                   <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(<span class="fl">0.95</span>, <span class="fl">0.1</span>)) <span class="sc">+</span></span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(.<span class="dv">95</span>, <span class="fl">0.55</span>)) <span class="sc">+</span></span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scalebar</span>(<span class="at">dist =</span> <span class="dv">200</span>,</span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>           <span class="at">x.min =</span> <span class="dv">109</span>,</span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>           <span class="at">x.max =</span> <span class="dv">128</span>,</span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a>           <span class="at">y.min =</span> <span class="fl">29.5</span>,</span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a>           <span class="at">y.max =</span> <span class="dv">42</span>,</span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a>           <span class="at">dist_unit =</span> <span class="st">&quot;km&quot;</span>,</span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a>           <span class="at">transform =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a>           <span class="at">model =</span> <span class="st">&quot;WGS84&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="fu">c</span>(<span class="dv">109</span>, <span class="dv">128</span>)) <span class="sc">+</span></span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="fu">c</span>(<span class="dv">28</span>, <span class="dv">42</span>)) <span class="sc">+</span></span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Longitude&quot;</span>,</span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Latitude&quot;</span>)</span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a><span class="fu">north2</span>(zoom, <span class="fl">0.9</span>, .<span class="dv">1</span>)</span>
-<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a><span class="fu">dev.off</span>()</span>
-<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a><span class="do">## png </span></span>
-<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a><span class="do">##   2</span></span></code></pre></div>
+<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a><span class="fu">north2</span>(zoom, <span class="fl">0.9</span>, .<span class="dv">1</span>)</span>
+<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a><span class="fu">dev.off</span>()</span>
+<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a><span class="do">## png </span></span>
+<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a><span class="do">##   2</span></span></code></pre></div>
 </div>
 <div id="mega-environment-delineation" class="section level1" number="4">
 <h1><span class="header-section-number">4</span> Mega-environment delineation</h1>
@@ -1034,7 +1033,7 @@ Figure 4.1: Similarity
 Figure 5.1: biplot for PCA
 </p>
 </div>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;figs/fig3_pca.png&quot;</span>, <span class="at">width =</span> <span class="dv">11</span>, <span class="at">height =</span> <span class="dv">11</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;figs/fig3_pca.jpeg&quot;</span>, <span class="at">width =</span> <span class="dv">11</span>, <span class="at">height =</span> <span class="dv">11</span>)</span></code></pre></div>
 </div>
 <div id="environmental-tipology-vapor-pressure-deficit" class="section level2" number="5.4">
 <h2><span class="header-section-number">5.4</span> Environmental tipology (vapor pressure deficit)</h2>
@@ -1181,7 +1180,7 @@ Figure 5.1: biplot for PCA
 Figure 5.2: Quantiles for vapor pressure deficit (A), deficit by precipitation (B), minimum air temperature (C), and maximum air temperature (D) observed in the studied mega-environments across distinct crop stages and cultivation years.
 </p>
 </div>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;figs/fig4_typology_vpd.png&quot;</span>, <span class="at">width =</span> <span class="dv">10</span>, <span class="at">height =</span> <span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;figs/fig4_typology_vpd.jpeg&quot;</span>, <span class="at">width =</span> <span class="dv">10</span>, <span class="at">height =</span> <span class="dv">5</span>)</span></code></pre></div>
 </div>
 </div>
 <div id="helper-functions" class="section level1" number="6">
@@ -1262,7 +1261,7 @@ Figure 5.2: Quantiles for vapor pressure deficit (A), deficit by precipitation (
 <span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Percentage of the total Variance (%)&quot;</span>,</span>
 <span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">&quot;Source&quot;</span>)</span></code></pre></div>
 <p><img src="code_files/figure-html/unnamed-chunk-17-1.png" width="768" /></p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;figs/fig5_vcomp.png&quot;</span>, <span class="at">width =</span> <span class="dv">6</span>, <span class="at">height =</span> <span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;figs/fig5_vcomp.jpeg&quot;</span>, <span class="at">width =</span> <span class="dv">6</span>, <span class="at">height =</span> <span class="dv">5</span>)</span></code></pre></div>
 </div>
 </div>
 <div id="selecion-within-me" class="section level1" number="8">
@@ -1287,11 +1286,11 @@ Figure 5.2: Quantiles for vapor pressure deficit (A), deficit by precipitation (
 <span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>Evaluating trait PH <span class="sc">|</span><span class="er">==========</span>                                  <span class="er">|</span> <span class="dv">22</span>% <span class="dv">00</span><span class="sc">:</span><span class="dv">00</span><span class="sc">:</span><span class="dv">01</span> </span>
 <span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>Evaluating trait EH <span class="sc">|</span><span class="er">===============</span>                             <span class="er">|</span> <span class="dv">33</span>% <span class="dv">00</span><span class="sc">:</span><span class="dv">00</span><span class="sc">:</span><span class="dv">01</span> </span>
 <span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>Evaluating trait BTL <span class="sc">|</span><span class="er">===================</span>                        <span class="er">|</span> <span class="dv">44</span>% <span class="dv">00</span><span class="sc">:</span><span class="dv">00</span><span class="sc">:</span><span class="dv">02</span> </span>
-<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>Evaluating trait GY <span class="sc">|</span><span class="er">========================</span>                    <span class="er">|</span> <span class="dv">56</span>% <span class="dv">00</span><span class="sc">:</span><span class="dv">00</span><span class="sc">:</span><span class="dv">02</span> </span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>Evaluating trait GY <span class="sc">|</span><span class="er">========================</span>                    <span class="er">|</span> <span class="dv">56</span>% <span class="dv">00</span><span class="sc">:</span><span class="dv">00</span><span class="sc">:</span><span class="dv">03</span> </span>
 <span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>Evaluating trait EL <span class="sc">|</span><span class="er">=============================</span>               <span class="er">|</span> <span class="dv">67</span>% <span class="dv">00</span><span class="sc">:</span><span class="dv">00</span><span class="sc">:</span><span class="dv">03</span> </span>
-<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>Evaluating trait ER <span class="sc">|</span><span class="er">==================================</span>          <span class="er">|</span> <span class="dv">78</span>% <span class="dv">00</span><span class="sc">:</span><span class="dv">00</span><span class="sc">:</span><span class="dv">03</span> </span>
-<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a>Evaluating trait GWE <span class="sc">|</span><span class="er">======================================</span>     <span class="er">|</span> <span class="dv">89</span>% <span class="dv">00</span><span class="sc">:</span><span class="dv">00</span><span class="sc">:</span><span class="dv">04</span> </span>
-<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a>Evaluating trait HSW <span class="sc">|</span><span class="er">===========================================|</span> <span class="dv">100</span>% <span class="dv">00</span><span class="sc">:</span><span class="dv">00</span><span class="sc">:</span><span class="dv">04</span> </span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>Evaluating trait ER <span class="sc">|</span><span class="er">==================================</span>          <span class="er">|</span> <span class="dv">78</span>% <span class="dv">00</span><span class="sc">:</span><span class="dv">00</span><span class="sc">:</span><span class="dv">04</span> </span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a>Evaluating trait GWE <span class="sc">|</span><span class="er">======================================</span>     <span class="er">|</span> <span class="dv">89</span>% <span class="dv">00</span><span class="sc">:</span><span class="dv">00</span><span class="sc">:</span><span class="dv">05</span> </span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a>Evaluating trait HSW <span class="sc">|</span><span class="er">===========================================|</span> <span class="dv">100</span>% <span class="dv">00</span><span class="sc">:</span><span class="dv">00</span><span class="sc">:</span><span class="dv">06</span> </span>
 <span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a><span class="do">## ---------------------------------------------------------------------------</span></span>
 <span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a><span class="do">## P-values for Likelihood Ratio Test of the analyzed traits</span></span>
 <span id="cb22-26"><a href="#cb22-26" aria-hidden="true" tabindex="-1"></a><span class="do">## ---------------------------------------------------------------------------</span></span>
@@ -1307,13 +1306,13 @@ Figure 5.2: Quantiles for vapor pressure deficit (A), deficit by precipitation (
 <span id="cb22-36"><a href="#cb22-36" aria-hidden="true" tabindex="-1"></a><span class="do">## All variables with significant (p &lt; 0.05) genotype-vs-environment interaction</span></span>
 <span id="cb22-37"><a href="#cb22-37" aria-hidden="true" tabindex="-1"></a><span class="do">## Evaluating trait GMC |=====                                      | 11% 00:00:00 </span></span>
 <span id="cb22-38"><a href="#cb22-38" aria-hidden="true" tabindex="-1"></a>Evaluating trait PH <span class="sc">|</span><span class="er">==========</span>                                  <span class="er">|</span> <span class="dv">22</span>% <span class="dv">00</span><span class="sc">:</span><span class="dv">00</span><span class="sc">:</span><span class="dv">01</span> </span>
-<span id="cb22-39"><a href="#cb22-39" aria-hidden="true" tabindex="-1"></a>Evaluating trait EH <span class="sc">|</span><span class="er">===============</span>                             <span class="er">|</span> <span class="dv">33</span>% <span class="dv">00</span><span class="sc">:</span><span class="dv">00</span><span class="sc">:</span><span class="dv">02</span> </span>
+<span id="cb22-39"><a href="#cb22-39" aria-hidden="true" tabindex="-1"></a>Evaluating trait EH <span class="sc">|</span><span class="er">===============</span>                             <span class="er">|</span> <span class="dv">33</span>% <span class="dv">00</span><span class="sc">:</span><span class="dv">00</span><span class="sc">:</span><span class="dv">01</span> </span>
 <span id="cb22-40"><a href="#cb22-40" aria-hidden="true" tabindex="-1"></a>Evaluating trait BTL <span class="sc">|</span><span class="er">===================</span>                        <span class="er">|</span> <span class="dv">44</span>% <span class="dv">00</span><span class="sc">:</span><span class="dv">00</span><span class="sc">:</span><span class="dv">02</span> </span>
 <span id="cb22-41"><a href="#cb22-41" aria-hidden="true" tabindex="-1"></a>Evaluating trait GY <span class="sc">|</span><span class="er">========================</span>                    <span class="er">|</span> <span class="dv">56</span>% <span class="dv">00</span><span class="sc">:</span><span class="dv">00</span><span class="sc">:</span><span class="dv">03</span> </span>
 <span id="cb22-42"><a href="#cb22-42" aria-hidden="true" tabindex="-1"></a>Evaluating trait EL <span class="sc">|</span><span class="er">=============================</span>               <span class="er">|</span> <span class="dv">67</span>% <span class="dv">00</span><span class="sc">:</span><span class="dv">00</span><span class="sc">:</span><span class="dv">04</span> </span>
 <span id="cb22-43"><a href="#cb22-43" aria-hidden="true" tabindex="-1"></a>Evaluating trait ER <span class="sc">|</span><span class="er">==================================</span>          <span class="er">|</span> <span class="dv">78</span>% <span class="dv">00</span><span class="sc">:</span><span class="dv">00</span><span class="sc">:</span><span class="dv">04</span> </span>
 <span id="cb22-44"><a href="#cb22-44" aria-hidden="true" tabindex="-1"></a>Evaluating trait GWE <span class="sc">|</span><span class="er">======================================</span>     <span class="er">|</span> <span class="dv">89</span>% <span class="dv">00</span><span class="sc">:</span><span class="dv">00</span><span class="sc">:</span><span class="dv">05</span> </span>
-<span id="cb22-45"><a href="#cb22-45" aria-hidden="true" tabindex="-1"></a>Evaluating trait HSW <span class="sc">|</span><span class="er">===========================================|</span> <span class="dv">100</span>% <span class="dv">00</span><span class="sc">:</span><span class="dv">00</span><span class="sc">:</span><span class="dv">05</span> </span>
+<span id="cb22-45"><a href="#cb22-45" aria-hidden="true" tabindex="-1"></a>Evaluating trait HSW <span class="sc">|</span><span class="er">===========================================|</span> <span class="dv">100</span>% <span class="dv">00</span><span class="sc">:</span><span class="dv">00</span><span class="sc">:</span><span class="dv">06</span> </span>
 <span id="cb22-46"><a href="#cb22-46" aria-hidden="true" tabindex="-1"></a><span class="do">## ---------------------------------------------------------------------------</span></span>
 <span id="cb22-47"><a href="#cb22-47" aria-hidden="true" tabindex="-1"></a><span class="do">## P-values for Likelihood Ratio Test of the analyzed traits</span></span>
 <span id="cb22-48"><a href="#cb22-48" aria-hidden="true" tabindex="-1"></a><span class="do">## ---------------------------------------------------------------------------</span></span>
@@ -1330,14 +1329,14 @@ Figure 5.2: Quantiles for vapor pressure deficit (A), deficit by precipitation (
 <span id="cb22-59"><a href="#cb22-59" aria-hidden="true" tabindex="-1"></a><span class="do">## GMC EH </span></span>
 <span id="cb22-60"><a href="#cb22-60" aria-hidden="true" tabindex="-1"></a><span class="do">## ---------------------------------------------------------------------------</span></span>
 <span id="cb22-61"><a href="#cb22-61" aria-hidden="true" tabindex="-1"></a><span class="do">## Evaluating trait GMC |=====                                      | 11% 00:00:00 </span></span>
-<span id="cb22-62"><a href="#cb22-62" aria-hidden="true" tabindex="-1"></a>Evaluating trait PH <span class="sc">|</span><span class="er">==========</span>                                  <span class="er">|</span> <span class="dv">22</span>% <span class="dv">00</span><span class="sc">:</span><span class="dv">00</span><span class="sc">:</span><span class="dv">00</span> </span>
+<span id="cb22-62"><a href="#cb22-62" aria-hidden="true" tabindex="-1"></a>Evaluating trait PH <span class="sc">|</span><span class="er">==========</span>                                  <span class="er">|</span> <span class="dv">22</span>% <span class="dv">00</span><span class="sc">:</span><span class="dv">00</span><span class="sc">:</span><span class="dv">01</span> </span>
 <span id="cb22-63"><a href="#cb22-63" aria-hidden="true" tabindex="-1"></a>Evaluating trait EH <span class="sc">|</span><span class="er">===============</span>                             <span class="er">|</span> <span class="dv">33</span>% <span class="dv">00</span><span class="sc">:</span><span class="dv">00</span><span class="sc">:</span><span class="dv">01</span> </span>
-<span id="cb22-64"><a href="#cb22-64" aria-hidden="true" tabindex="-1"></a>Evaluating trait BTL <span class="sc">|</span><span class="er">===================</span>                        <span class="er">|</span> <span class="dv">44</span>% <span class="dv">00</span><span class="sc">:</span><span class="dv">00</span><span class="sc">:</span><span class="dv">01</span> </span>
+<span id="cb22-64"><a href="#cb22-64" aria-hidden="true" tabindex="-1"></a>Evaluating trait BTL <span class="sc">|</span><span class="er">===================</span>                        <span class="er">|</span> <span class="dv">44</span>% <span class="dv">00</span><span class="sc">:</span><span class="dv">00</span><span class="sc">:</span><span class="dv">02</span> </span>
 <span id="cb22-65"><a href="#cb22-65" aria-hidden="true" tabindex="-1"></a>Evaluating trait GY <span class="sc">|</span><span class="er">========================</span>                    <span class="er">|</span> <span class="dv">56</span>% <span class="dv">00</span><span class="sc">:</span><span class="dv">00</span><span class="sc">:</span><span class="dv">02</span> </span>
-<span id="cb22-66"><a href="#cb22-66" aria-hidden="true" tabindex="-1"></a>Evaluating trait EL <span class="sc">|</span><span class="er">=============================</span>               <span class="er">|</span> <span class="dv">67</span>% <span class="dv">00</span><span class="sc">:</span><span class="dv">00</span><span class="sc">:</span><span class="dv">02</span> </span>
+<span id="cb22-66"><a href="#cb22-66" aria-hidden="true" tabindex="-1"></a>Evaluating trait EL <span class="sc">|</span><span class="er">=============================</span>               <span class="er">|</span> <span class="dv">67</span>% <span class="dv">00</span><span class="sc">:</span><span class="dv">00</span><span class="sc">:</span><span class="dv">03</span> </span>
 <span id="cb22-67"><a href="#cb22-67" aria-hidden="true" tabindex="-1"></a>Evaluating trait ER <span class="sc">|</span><span class="er">==================================</span>          <span class="er">|</span> <span class="dv">78</span>% <span class="dv">00</span><span class="sc">:</span><span class="dv">00</span><span class="sc">:</span><span class="dv">03</span> </span>
-<span id="cb22-68"><a href="#cb22-68" aria-hidden="true" tabindex="-1"></a>Evaluating trait GWE <span class="sc">|</span><span class="er">======================================</span>     <span class="er">|</span> <span class="dv">89</span>% <span class="dv">00</span><span class="sc">:</span><span class="dv">00</span><span class="sc">:</span><span class="dv">03</span> </span>
-<span id="cb22-69"><a href="#cb22-69" aria-hidden="true" tabindex="-1"></a>Evaluating trait HSW <span class="sc">|</span><span class="er">===========================================|</span> <span class="dv">100</span>% <span class="dv">00</span><span class="sc">:</span><span class="dv">00</span><span class="sc">:</span><span class="dv">04</span> </span>
+<span id="cb22-68"><a href="#cb22-68" aria-hidden="true" tabindex="-1"></a>Evaluating trait GWE <span class="sc">|</span><span class="er">======================================</span>     <span class="er">|</span> <span class="dv">89</span>% <span class="dv">00</span><span class="sc">:</span><span class="dv">00</span><span class="sc">:</span><span class="dv">04</span> </span>
+<span id="cb22-69"><a href="#cb22-69" aria-hidden="true" tabindex="-1"></a>Evaluating trait HSW <span class="sc">|</span><span class="er">===========================================|</span> <span class="dv">100</span>% <span class="dv">00</span><span class="sc">:</span><span class="dv">00</span><span class="sc">:</span><span class="dv">05</span> </span>
 <span id="cb22-70"><a href="#cb22-70" aria-hidden="true" tabindex="-1"></a><span class="do">## ---------------------------------------------------------------------------</span></span>
 <span id="cb22-71"><a href="#cb22-71" aria-hidden="true" tabindex="-1"></a><span class="do">## P-values for Likelihood Ratio Test of the analyzed traits</span></span>
 <span id="cb22-72"><a href="#cb22-72" aria-hidden="true" tabindex="-1"></a><span class="do">## ---------------------------------------------------------------------------</span></span>
@@ -1355,13 +1354,13 @@ Figure 5.2: Quantiles for vapor pressure deficit (A), deficit by precipitation (
 <span id="cb22-84"><a href="#cb22-84" aria-hidden="true" tabindex="-1"></a><span class="do">## ---------------------------------------------------------------------------</span></span>
 <span id="cb22-85"><a href="#cb22-85" aria-hidden="true" tabindex="-1"></a><span class="do">## Evaluating trait GMC |=====                                      | 11% 00:00:00 </span></span>
 <span id="cb22-86"><a href="#cb22-86" aria-hidden="true" tabindex="-1"></a>Evaluating trait PH <span class="sc">|</span><span class="er">==========</span>                                  <span class="er">|</span> <span class="dv">22</span>% <span class="dv">00</span><span class="sc">:</span><span class="dv">00</span><span class="sc">:</span><span class="dv">01</span> </span>
-<span id="cb22-87"><a href="#cb22-87" aria-hidden="true" tabindex="-1"></a>Evaluating trait EH <span class="sc">|</span><span class="er">===============</span>                             <span class="er">|</span> <span class="dv">33</span>% <span class="dv">00</span><span class="sc">:</span><span class="dv">00</span><span class="sc">:</span><span class="dv">01</span> </span>
-<span id="cb22-88"><a href="#cb22-88" aria-hidden="true" tabindex="-1"></a>Evaluating trait BTL <span class="sc">|</span><span class="er">===================</span>                        <span class="er">|</span> <span class="dv">44</span>% <span class="dv">00</span><span class="sc">:</span><span class="dv">00</span><span class="sc">:</span><span class="dv">01</span> </span>
-<span id="cb22-89"><a href="#cb22-89" aria-hidden="true" tabindex="-1"></a>Evaluating trait GY <span class="sc">|</span><span class="er">========================</span>                    <span class="er">|</span> <span class="dv">56</span>% <span class="dv">00</span><span class="sc">:</span><span class="dv">00</span><span class="sc">:</span><span class="dv">02</span> </span>
-<span id="cb22-90"><a href="#cb22-90" aria-hidden="true" tabindex="-1"></a>Evaluating trait EL <span class="sc">|</span><span class="er">=============================</span>               <span class="er">|</span> <span class="dv">67</span>% <span class="dv">00</span><span class="sc">:</span><span class="dv">00</span><span class="sc">:</span><span class="dv">02</span> </span>
-<span id="cb22-91"><a href="#cb22-91" aria-hidden="true" tabindex="-1"></a>Evaluating trait ER <span class="sc">|</span><span class="er">==================================</span>          <span class="er">|</span> <span class="dv">78</span>% <span class="dv">00</span><span class="sc">:</span><span class="dv">00</span><span class="sc">:</span><span class="dv">03</span> </span>
-<span id="cb22-92"><a href="#cb22-92" aria-hidden="true" tabindex="-1"></a>Evaluating trait GWE <span class="sc">|</span><span class="er">======================================</span>     <span class="er">|</span> <span class="dv">89</span>% <span class="dv">00</span><span class="sc">:</span><span class="dv">00</span><span class="sc">:</span><span class="dv">03</span> </span>
-<span id="cb22-93"><a href="#cb22-93" aria-hidden="true" tabindex="-1"></a>Evaluating trait HSW <span class="sc">|</span><span class="er">===========================================|</span> <span class="dv">100</span>% <span class="dv">00</span><span class="sc">:</span><span class="dv">00</span><span class="sc">:</span><span class="dv">04</span> </span>
+<span id="cb22-87"><a href="#cb22-87" aria-hidden="true" tabindex="-1"></a>Evaluating trait EH <span class="sc">|</span><span class="er">===============</span>                             <span class="er">|</span> <span class="dv">33</span>% <span class="dv">00</span><span class="sc">:</span><span class="dv">00</span><span class="sc">:</span><span class="dv">02</span> </span>
+<span id="cb22-88"><a href="#cb22-88" aria-hidden="true" tabindex="-1"></a>Evaluating trait BTL <span class="sc">|</span><span class="er">===================</span>                        <span class="er">|</span> <span class="dv">44</span>% <span class="dv">00</span><span class="sc">:</span><span class="dv">00</span><span class="sc">:</span><span class="dv">02</span> </span>
+<span id="cb22-89"><a href="#cb22-89" aria-hidden="true" tabindex="-1"></a>Evaluating trait GY <span class="sc">|</span><span class="er">========================</span>                    <span class="er">|</span> <span class="dv">56</span>% <span class="dv">00</span><span class="sc">:</span><span class="dv">00</span><span class="sc">:</span><span class="dv">03</span> </span>
+<span id="cb22-90"><a href="#cb22-90" aria-hidden="true" tabindex="-1"></a>Evaluating trait EL <span class="sc">|</span><span class="er">=============================</span>               <span class="er">|</span> <span class="dv">67</span>% <span class="dv">00</span><span class="sc">:</span><span class="dv">00</span><span class="sc">:</span><span class="dv">04</span> </span>
+<span id="cb22-91"><a href="#cb22-91" aria-hidden="true" tabindex="-1"></a>Evaluating trait ER <span class="sc">|</span><span class="er">==================================</span>          <span class="er">|</span> <span class="dv">78</span>% <span class="dv">00</span><span class="sc">:</span><span class="dv">00</span><span class="sc">:</span><span class="dv">05</span> </span>
+<span id="cb22-92"><a href="#cb22-92" aria-hidden="true" tabindex="-1"></a>Evaluating trait GWE <span class="sc">|</span><span class="er">======================================</span>     <span class="er">|</span> <span class="dv">89</span>% <span class="dv">00</span><span class="sc">:</span><span class="dv">00</span><span class="sc">:</span><span class="dv">05</span> </span>
+<span id="cb22-93"><a href="#cb22-93" aria-hidden="true" tabindex="-1"></a>Evaluating trait HSW <span class="sc">|</span><span class="er">===========================================|</span> <span class="dv">100</span>% <span class="dv">00</span><span class="sc">:</span><span class="dv">00</span><span class="sc">:</span><span class="dv">06</span> </span>
 <span id="cb22-94"><a href="#cb22-94" aria-hidden="true" tabindex="-1"></a><span class="do">## ---------------------------------------------------------------------------</span></span>
 <span id="cb22-95"><a href="#cb22-95" aria-hidden="true" tabindex="-1"></a><span class="do">## P-values for Likelihood Ratio Test of the analyzed traits</span></span>
 <span id="cb22-96"><a href="#cb22-96" aria-hidden="true" tabindex="-1"></a><span class="do">## ---------------------------------------------------------------------------</span></span>
@@ -1618,7 +1617,7 @@ Figure 5.2: Quantiles for vapor pressure deficit (A), deficit by precipitation (
 <span id="cb23-238"><a href="#cb23-238" aria-hidden="true" tabindex="-1"></a>               <span class="at">ncol =</span> <span class="dv">4</span>)</span></code></pre></div>
 <p><img src="code_files/figure-html/unnamed-chunk-19-1.png" width="768" /></p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;figs/fig6_radar.png&quot;</span>, <span class="at">width =</span> <span class="dv">12</span>, <span class="at">height =</span> <span class="dv">4</span>)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;figs/fig6_radar.jpeg&quot;</span>, <span class="at">width =</span> <span class="dv">12</span>, <span class="at">height =</span> <span class="dv">4</span>)</span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co"># selected genotypes</span></span>
 <span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>selm1 <span class="ot">&lt;-</span> <span class="fu">sel_gen</span>(mgidi<span class="sc">$</span>mgidi[[<span class="dv">1</span>]])</span>
@@ -1633,7 +1632,7 @@ Figure 5.2: Quantiles for vapor pressure deficit (A), deficit by precipitation (
 <span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>  ggthemes<span class="sc">::</span><span class="fu">scale_fill_stata</span>()</span></code></pre></div>
 <p><img src="code_files/figure-html/unnamed-chunk-19-2.png" width="768" /></p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;figs/fig7_veen.png&quot;</span>, <span class="at">width =</span> <span class="dv">6</span>, <span class="at">height =</span> <span class="dv">5</span>)</span></code></pre></div>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;figs/fig7_veen.jpeg&quot;</span>, <span class="at">width =</span> <span class="dv">6</span>, <span class="at">height =</span> <span class="dv">5</span>)</span></code></pre></div>
 </div>
 <div id="selection-differentials-for-mean-performance" class="section level2" number="8.3">
 <h2><span class="header-section-number">8.3</span> selection differentials for mean performance</h2>
@@ -1692,7 +1691,7 @@ Figure 5.2: Quantiles for vapor pressure deficit (A), deficit by precipitation (
 <span id="cb26-53"><a href="#cb26-53" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> ggthemes<span class="sc">::</span><span class="fu">stata_pal</span>()(<span class="dv">4</span>)[<span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>)])</span></code></pre></div>
 <p><img src="code_files/figure-html/unnamed-chunk-20-1.png" width="768" /></p>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;figs/fig8_sd_mper.png&quot;</span>, <span class="at">width =</span> <span class="dv">14</span>, <span class="at">height =</span> <span class="dv">6</span>)</span></code></pre></div>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;figs/fig8_sd_mper.jpeg&quot;</span>, <span class="at">width =</span> <span class="dv">14</span>, <span class="at">height =</span> <span class="dv">6</span>)</span></code></pre></div>
 </div>
 <div id="selection-differentials-for-stability" class="section level2" number="8.4">
 <h2><span class="header-section-number">8.4</span> selection differentials for stability</h2>
@@ -1753,7 +1752,7 @@ Figure 5.2: Quantiles for vapor pressure deficit (A), deficit by precipitation (
 <span id="cb28-55"><a href="#cb28-55" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
 <span id="cb28-56"><a href="#cb28-56" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> ggthemes<span class="sc">::</span><span class="fu">stata_pal</span>()(<span class="dv">4</span>)[<span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>)])</span></code></pre></div>
 <p><img src="code_files/figure-html/unnamed-chunk-21-1.png" width="768" /></p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;figs/fig9_sd_stab.png&quot;</span>, <span class="at">width =</span> <span class="dv">14</span>, <span class="at">height =</span> <span class="dv">6</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;figs/fig9_sd_stab.jpeg&quot;</span>, <span class="at">width =</span> <span class="dv">14</span>, <span class="at">height =</span> <span class="dv">6</span>)</span></code></pre></div>
 </div>
 </div>
 <div id="rank-winners-in-each-mega-environment" class="section level1" number="9">
@@ -1775,7 +1774,7 @@ Figure 5.2: Quantiles for vapor pressure deficit (A), deficit by precipitation (
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mod_gge, <span class="at">type =</span> <span class="dv">6</span>)</span></code></pre></div>
 <p><img src="code_files/figure-html/unnamed-chunk-23-1.png" width="768" /></p>
 <div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;figs/fig10_gge.png&quot;</span>, <span class="at">width =</span> <span class="dv">10</span>, <span class="at">height =</span> <span class="dv">5</span>)</span></code></pre></div>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;figs/fig10_gge.jpeg&quot;</span>, <span class="at">width =</span> <span class="dv">10</span>, <span class="at">height =</span> <span class="dv">5</span>)</span></code></pre></div>
 </div>
 <div id="section-info" class="section level1" number="11">
 <h1><span class="header-section-number">11</span> Section info</h1>
@@ -1797,59 +1796,62 @@ Figure 5.2: Quantiles for vapor pressure deficit (A), deficit by precipitation (
 <span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
 <span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a><span class="do">## other attached packages:</span></span>
 <span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] ggsn_0.5.0          forcats_0.5.2       stringr_1.4.1      </span></span>
-<span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a><span class="do">##  [4] dplyr_1.0.9         purrr_0.3.4         readr_2.1.2        </span></span>
-<span id="cb33-20"><a href="#cb33-20" aria-hidden="true" tabindex="-1"></a><span class="do">##  [7] tidyr_1.2.0         tibble_3.1.8        tidyverse_1.3.2    </span></span>
+<span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a><span class="do">##  [4] dplyr_1.0.10        purrr_0.3.4         readr_2.1.3        </span></span>
+<span id="cb33-20"><a href="#cb33-20" aria-hidden="true" tabindex="-1"></a><span class="do">##  [7] tidyr_1.2.1         tibble_3.1.8        tidyverse_1.3.2    </span></span>
 <span id="cb33-21"><a href="#cb33-21" aria-hidden="true" tabindex="-1"></a><span class="do">## [10] broom.mixed_0.2.9.4 lmerTest_3.1-3      lme4_1.1-30        </span></span>
-<span id="cb33-22"><a href="#cb33-22" aria-hidden="true" tabindex="-1"></a><span class="do">## [13] Matrix_1.4-1        rnaturalearth_0.1.0 metan_1.17.0.9000  </span></span>
-<span id="cb33-23"><a href="#cb33-23" aria-hidden="true" tabindex="-1"></a><span class="do">## [16] ggridges_0.5.3      superheat_0.1.0     ggh4x_0.2.2        </span></span>
-<span id="cb33-24"><a href="#cb33-24" aria-hidden="true" tabindex="-1"></a><span class="do">## [19] ggrepel_0.9.1       FactoMineR_2.4      factoextra_1.0.7   </span></span>
+<span id="cb33-22"><a href="#cb33-22" aria-hidden="true" tabindex="-1"></a><span class="do">## [13] Matrix_1.5-1        rnaturalearth_0.1.0 metan_1.17.0.9000  </span></span>
+<span id="cb33-23"><a href="#cb33-23" aria-hidden="true" tabindex="-1"></a><span class="do">## [16] ggridges_0.5.4      superheat_0.1.0     ggh4x_0.2.2        </span></span>
+<span id="cb33-24"><a href="#cb33-24" aria-hidden="true" tabindex="-1"></a><span class="do">## [19] ggrepel_0.9.1       FactoMineR_2.6      factoextra_1.0.7   </span></span>
 <span id="cb33-25"><a href="#cb33-25" aria-hidden="true" tabindex="-1"></a><span class="do">## [22] ggplot2_3.3.6       rio_0.5.29          EnvRtype_1.1.0     </span></span>
 <span id="cb33-26"><a href="#cb33-26" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
 <span id="cb33-27"><a href="#cb33-27" aria-hidden="true" tabindex="-1"></a><span class="do">## loaded via a namespace (and not attached):</span></span>
 <span id="cb33-28"><a href="#cb33-28" aria-hidden="true" tabindex="-1"></a><span class="do">##   [1] readxl_1.4.1             backports_1.4.1          systemfonts_1.0.4       </span></span>
 <span id="cb33-29"><a href="#cb33-29" aria-hidden="true" tabindex="-1"></a><span class="do">##   [4] plyr_1.8.7               sp_1.5-0                 splines_4.2.0           </span></span>
-<span id="cb33-30"><a href="#cb33-30" aria-hidden="true" tabindex="-1"></a><span class="do">##   [7] listenv_0.8.0            digest_0.6.29            foreach_1.5.2           </span></span>
-<span id="cb33-31"><a href="#cb33-31" aria-hidden="true" tabindex="-1"></a><span class="do">##  [10] htmltools_0.5.2          fansi_1.0.3              magrittr_2.0.3          </span></span>
-<span id="cb33-32"><a href="#cb33-32" aria-hidden="true" tabindex="-1"></a><span class="do">##  [13] googlesheets4_1.0.1      cluster_2.1.4            tzdb_0.3.0              </span></span>
-<span id="cb33-33"><a href="#cb33-33" aria-hidden="true" tabindex="-1"></a><span class="do">##  [16] openxlsx_4.2.5           globals_0.16.1           modelr_0.1.9            </span></span>
-<span id="cb33-34"><a href="#cb33-34" aria-hidden="true" tabindex="-1"></a><span class="do">##  [19] rmdformats_1.0.4         jpeg_0.1-9               colorspace_2.0-3        </span></span>
-<span id="cb33-35"><a href="#cb33-35" aria-hidden="true" tabindex="-1"></a><span class="do">##  [22] rvest_1.0.3              textshaping_0.3.6        haven_2.5.1             </span></span>
-<span id="cb33-36"><a href="#cb33-36" aria-hidden="true" tabindex="-1"></a><span class="do">##  [25] xfun_0.31                crayon_1.5.1             jsonlite_1.8.0          </span></span>
-<span id="cb33-37"><a href="#cb33-37" aria-hidden="true" tabindex="-1"></a><span class="do">##  [28] iterators_1.0.14         glue_1.6.2               polyclip_1.10-0         </span></span>
-<span id="cb33-38"><a href="#cb33-38" aria-hidden="true" tabindex="-1"></a><span class="do">##  [31] gtable_0.3.1             gargle_1.2.0             car_3.1-0               </span></span>
-<span id="cb33-39"><a href="#cb33-39" aria-hidden="true" tabindex="-1"></a><span class="do">##  [34] abind_1.4-5              scales_1.2.1             DBI_1.1.3               </span></span>
-<span id="cb33-40"><a href="#cb33-40" aria-hidden="true" tabindex="-1"></a><span class="do">##  [37] GGally_2.1.2             rstatix_0.7.0            ggthemes_4.2.4          </span></span>
-<span id="cb33-41"><a href="#cb33-41" aria-hidden="true" tabindex="-1"></a><span class="do">##  [40] Rcpp_1.0.9               units_0.8-0              flashClust_1.01-2       </span></span>
-<span id="cb33-42"><a href="#cb33-42" aria-hidden="true" tabindex="-1"></a><span class="do">##  [43] foreign_0.8-82           proxy_0.4-27             DT_0.24                 </span></span>
-<span id="cb33-43"><a href="#cb33-43" aria-hidden="true" tabindex="-1"></a><span class="do">##  [46] htmlwidgets_1.5.4        httr_1.4.4               RColorBrewer_1.1-3      </span></span>
-<span id="cb33-44"><a href="#cb33-44" aria-hidden="true" tabindex="-1"></a><span class="do">##  [49] wk_0.6.0                 ellipsis_0.3.2           pkgconfig_2.0.3         </span></span>
-<span id="cb33-45"><a href="#cb33-45" aria-hidden="true" tabindex="-1"></a><span class="do">##  [52] reshape_0.8.9            farver_2.1.1             sass_0.4.2              </span></span>
-<span id="cb33-46"><a href="#cb33-46" aria-hidden="true" tabindex="-1"></a><span class="do">##  [55] dbplyr_2.2.1             utf8_1.2.2               tidyselect_1.1.2        </span></span>
-<span id="cb33-47"><a href="#cb33-47" aria-hidden="true" tabindex="-1"></a><span class="do">##  [58] labeling_0.4.2           rlang_1.0.3              reshape2_1.4.4          </span></span>
-<span id="cb33-48"><a href="#cb33-48" aria-hidden="true" tabindex="-1"></a><span class="do">##  [61] munsell_0.5.0            cellranger_1.1.0         tools_4.2.0             </span></span>
-<span id="cb33-49"><a href="#cb33-49" aria-hidden="true" tabindex="-1"></a><span class="do">##  [64] cachem_1.0.6             cli_3.3.0                generics_0.1.3          </span></span>
-<span id="cb33-50"><a href="#cb33-50" aria-hidden="true" tabindex="-1"></a><span class="do">##  [67] ggmap_3.0.0              broom_1.0.1              mathjaxr_1.6-0          </span></span>
-<span id="cb33-51"><a href="#cb33-51" aria-hidden="true" tabindex="-1"></a><span class="do">##  [70] ggdendro_0.1.23          evaluate_0.16            fastmap_1.1.0           </span></span>
-<span id="cb33-52"><a href="#cb33-52" aria-hidden="true" tabindex="-1"></a><span class="do">##  [73] ragg_1.2.2               yaml_2.3.5               knitr_1.40              </span></span>
-<span id="cb33-53"><a href="#cb33-53" aria-hidden="true" tabindex="-1"></a><span class="do">##  [76] fs_1.5.2                 zip_2.2.0                s2_1.1.0                </span></span>
-<span id="cb33-54"><a href="#cb33-54" aria-hidden="true" tabindex="-1"></a><span class="do">##  [79] RgoogleMaps_1.4.5.3      future_1.28.0            nlme_3.1-157            </span></span>
-<span id="cb33-55"><a href="#cb33-55" aria-hidden="true" tabindex="-1"></a><span class="do">##  [82] leaps_3.1                xml2_1.3.3               compiler_4.2.0          </span></span>
-<span id="cb33-56"><a href="#cb33-56" aria-hidden="true" tabindex="-1"></a><span class="do">##  [85] rstudioapi_0.14          curl_4.3.2               png_0.1-7               </span></span>
-<span id="cb33-57"><a href="#cb33-57" aria-hidden="true" tabindex="-1"></a><span class="do">##  [88] ggsignif_0.6.3           e1071_1.7-11             reprex_2.0.2            </span></span>
-<span id="cb33-58"><a href="#cb33-58" aria-hidden="true" tabindex="-1"></a><span class="do">##  [91] tweenr_2.0.1             bslib_0.4.0              stringi_1.7.8           </span></span>
-<span id="cb33-59"><a href="#cb33-59" aria-hidden="true" tabindex="-1"></a><span class="do">##  [94] highr_0.9                lattice_0.20-45          rnaturalearthhires_0.2.0</span></span>
-<span id="cb33-60"><a href="#cb33-60" aria-hidden="true" tabindex="-1"></a><span class="do">##  [97] classInt_0.4-7           nloptr_2.0.3             vctrs_0.4.1             </span></span>
-<span id="cb33-61"><a href="#cb33-61" aria-hidden="true" tabindex="-1"></a><span class="do">## [100] pillar_1.8.1             lifecycle_1.0.1          furrr_0.3.1             </span></span>
-<span id="cb33-62"><a href="#cb33-62" aria-hidden="true" tabindex="-1"></a><span class="do">## [103] jquerylib_0.1.4          data.table_1.14.2        bitops_1.0-7            </span></span>
-<span id="cb33-63"><a href="#cb33-63" aria-hidden="true" tabindex="-1"></a><span class="do">## [106] maptools_1.1-4           patchwork_1.1.2          R6_2.5.1                </span></span>
-<span id="cb33-64"><a href="#cb33-64" aria-hidden="true" tabindex="-1"></a><span class="do">## [109] bookdown_0.28            KernSmooth_2.23-20       parallelly_1.32.1       </span></span>
-<span id="cb33-65"><a href="#cb33-65" aria-hidden="true" tabindex="-1"></a><span class="do">## [112] codetools_0.2-18         boot_1.3-28              MASS_7.3-58.1           </span></span>
-<span id="cb33-66"><a href="#cb33-66" aria-hidden="true" tabindex="-1"></a><span class="do">## [115] assertthat_0.2.1         rjson_0.2.21             withr_2.5.0             </span></span>
-<span id="cb33-67"><a href="#cb33-67" aria-hidden="true" tabindex="-1"></a><span class="do">## [118] parallel_4.2.0           hms_1.1.2                class_7.3-20            </span></span>
-<span id="cb33-68"><a href="#cb33-68" aria-hidden="true" tabindex="-1"></a><span class="do">## [121] minqa_1.2.4              rmarkdown_2.16           carData_3.0-5           </span></span>
-<span id="cb33-69"><a href="#cb33-69" aria-hidden="true" tabindex="-1"></a><span class="do">## [124] googledrive_2.0.0        ggpubr_0.4.0             sf_1.0-8                </span></span>
-<span id="cb33-70"><a href="#cb33-70" aria-hidden="true" tabindex="-1"></a><span class="do">## [127] ggforce_0.3.4            numDeriv_2016.8-1.1      scatterplot3d_0.3-41    </span></span>
-<span id="cb33-71"><a href="#cb33-71" aria-hidden="true" tabindex="-1"></a><span class="do">## [130] lubridate_1.8.0</span></span></code></pre></div>
+<span id="cb33-30"><a href="#cb33-30" aria-hidden="true" tabindex="-1"></a><span class="do">##   [7] listenv_0.8.0            TH.data_1.1-1            digest_0.6.29           </span></span>
+<span id="cb33-31"><a href="#cb33-31" aria-hidden="true" tabindex="-1"></a><span class="do">##  [10] foreach_1.5.2            htmltools_0.5.2          fansi_1.0.3             </span></span>
+<span id="cb33-32"><a href="#cb33-32" aria-hidden="true" tabindex="-1"></a><span class="do">##  [13] magrittr_2.0.3           googlesheets4_1.0.1      cluster_2.1.4           </span></span>
+<span id="cb33-33"><a href="#cb33-33" aria-hidden="true" tabindex="-1"></a><span class="do">##  [16] tzdb_0.3.0               openxlsx_4.2.5           globals_0.16.1          </span></span>
+<span id="cb33-34"><a href="#cb33-34" aria-hidden="true" tabindex="-1"></a><span class="do">##  [19] modelr_0.1.9             sandwich_3.0-2           rmdformats_1.0.4        </span></span>
+<span id="cb33-35"><a href="#cb33-35" aria-hidden="true" tabindex="-1"></a><span class="do">##  [22] jpeg_0.1-9               colorspace_2.0-3         rvest_1.0.3             </span></span>
+<span id="cb33-36"><a href="#cb33-36" aria-hidden="true" tabindex="-1"></a><span class="do">##  [25] textshaping_0.3.6        haven_2.5.1              xfun_0.31               </span></span>
+<span id="cb33-37"><a href="#cb33-37" aria-hidden="true" tabindex="-1"></a><span class="do">##  [28] crayon_1.5.2             jsonlite_1.8.2           iterators_1.0.14        </span></span>
+<span id="cb33-38"><a href="#cb33-38" aria-hidden="true" tabindex="-1"></a><span class="do">##  [31] survival_3.3-1           zoo_1.8-11               glue_1.6.2              </span></span>
+<span id="cb33-39"><a href="#cb33-39" aria-hidden="true" tabindex="-1"></a><span class="do">##  [34] polyclip_1.10-0          gtable_0.3.1             gargle_1.2.1            </span></span>
+<span id="cb33-40"><a href="#cb33-40" aria-hidden="true" tabindex="-1"></a><span class="do">##  [37] emmeans_1.8.1-1          car_3.1-0                abind_1.4-5             </span></span>
+<span id="cb33-41"><a href="#cb33-41" aria-hidden="true" tabindex="-1"></a><span class="do">##  [40] scales_1.2.1             mvtnorm_1.1-3            DBI_1.1.3               </span></span>
+<span id="cb33-42"><a href="#cb33-42" aria-hidden="true" tabindex="-1"></a><span class="do">##  [43] GGally_2.1.2             rstatix_0.7.0            ggthemes_4.2.4          </span></span>
+<span id="cb33-43"><a href="#cb33-43" aria-hidden="true" tabindex="-1"></a><span class="do">##  [46] Rcpp_1.0.9               xtable_1.8-4             units_0.8-0             </span></span>
+<span id="cb33-44"><a href="#cb33-44" aria-hidden="true" tabindex="-1"></a><span class="do">##  [49] flashClust_1.01-2        foreign_0.8-82           proxy_0.4-27            </span></span>
+<span id="cb33-45"><a href="#cb33-45" aria-hidden="true" tabindex="-1"></a><span class="do">##  [52] DT_0.25                  htmlwidgets_1.5.4        httr_1.4.4              </span></span>
+<span id="cb33-46"><a href="#cb33-46" aria-hidden="true" tabindex="-1"></a><span class="do">##  [55] RColorBrewer_1.1-3       wk_0.6.0                 ellipsis_0.3.2          </span></span>
+<span id="cb33-47"><a href="#cb33-47" aria-hidden="true" tabindex="-1"></a><span class="do">##  [58] pkgconfig_2.0.3          reshape_0.8.9            farver_2.1.1            </span></span>
+<span id="cb33-48"><a href="#cb33-48" aria-hidden="true" tabindex="-1"></a><span class="do">##  [61] multcompView_0.1-8       sass_0.4.2               dbplyr_2.2.1            </span></span>
+<span id="cb33-49"><a href="#cb33-49" aria-hidden="true" tabindex="-1"></a><span class="do">##  [64] utf8_1.2.2               reshape2_1.4.4           labeling_0.4.2          </span></span>
+<span id="cb33-50"><a href="#cb33-50" aria-hidden="true" tabindex="-1"></a><span class="do">##  [67] tidyselect_1.1.2         rlang_1.0.6              munsell_0.5.0           </span></span>
+<span id="cb33-51"><a href="#cb33-51" aria-hidden="true" tabindex="-1"></a><span class="do">##  [70] cellranger_1.1.0         tools_4.2.0              cachem_1.0.6            </span></span>
+<span id="cb33-52"><a href="#cb33-52" aria-hidden="true" tabindex="-1"></a><span class="do">##  [73] cli_3.3.0                generics_0.1.3           ggmap_3.0.0             </span></span>
+<span id="cb33-53"><a href="#cb33-53" aria-hidden="true" tabindex="-1"></a><span class="do">##  [76] broom_1.0.1              mathjaxr_1.6-0           ggdendro_0.1.23         </span></span>
+<span id="cb33-54"><a href="#cb33-54" aria-hidden="true" tabindex="-1"></a><span class="do">##  [79] evaluate_0.16            fastmap_1.1.0            ragg_1.2.3              </span></span>
+<span id="cb33-55"><a href="#cb33-55" aria-hidden="true" tabindex="-1"></a><span class="do">##  [82] yaml_2.3.5               knitr_1.40               fs_1.5.2                </span></span>
+<span id="cb33-56"><a href="#cb33-56" aria-hidden="true" tabindex="-1"></a><span class="do">##  [85] zip_2.2.1                s2_1.1.0                 RgoogleMaps_1.4.5.3     </span></span>
+<span id="cb33-57"><a href="#cb33-57" aria-hidden="true" tabindex="-1"></a><span class="do">##  [88] future_1.28.0            nlme_3.1-157             leaps_3.1               </span></span>
+<span id="cb33-58"><a href="#cb33-58" aria-hidden="true" tabindex="-1"></a><span class="do">##  [91] xml2_1.3.3               compiler_4.2.0           rstudioapi_0.14         </span></span>
+<span id="cb33-59"><a href="#cb33-59" aria-hidden="true" tabindex="-1"></a><span class="do">##  [94] png_0.1-7                curl_4.3.2               ggsignif_0.6.3          </span></span>
+<span id="cb33-60"><a href="#cb33-60" aria-hidden="true" tabindex="-1"></a><span class="do">##  [97] e1071_1.7-11             reprex_2.0.2             tweenr_2.0.2            </span></span>
+<span id="cb33-61"><a href="#cb33-61" aria-hidden="true" tabindex="-1"></a><span class="do">## [100] bslib_0.4.0              stringi_1.7.8            highr_0.9               </span></span>
+<span id="cb33-62"><a href="#cb33-62" aria-hidden="true" tabindex="-1"></a><span class="do">## [103] lattice_0.20-45          rnaturalearthhires_0.2.0 classInt_0.4-8          </span></span>
+<span id="cb33-63"><a href="#cb33-63" aria-hidden="true" tabindex="-1"></a><span class="do">## [106] nloptr_2.0.3             vctrs_0.4.2              pillar_1.8.1            </span></span>
+<span id="cb33-64"><a href="#cb33-64" aria-hidden="true" tabindex="-1"></a><span class="do">## [109] lifecycle_1.0.2          furrr_0.3.1              jquerylib_0.1.4         </span></span>
+<span id="cb33-65"><a href="#cb33-65" aria-hidden="true" tabindex="-1"></a><span class="do">## [112] estimability_1.4.1       maptools_1.1-4           bitops_1.0-7            </span></span>
+<span id="cb33-66"><a href="#cb33-66" aria-hidden="true" tabindex="-1"></a><span class="do">## [115] data.table_1.14.2        patchwork_1.1.2          R6_2.5.1                </span></span>
+<span id="cb33-67"><a href="#cb33-67" aria-hidden="true" tabindex="-1"></a><span class="do">## [118] bookdown_0.29            KernSmooth_2.23-20       parallelly_1.32.1       </span></span>
+<span id="cb33-68"><a href="#cb33-68" aria-hidden="true" tabindex="-1"></a><span class="do">## [121] codetools_0.2-18         boot_1.3-28              MASS_7.3-58.1           </span></span>
+<span id="cb33-69"><a href="#cb33-69" aria-hidden="true" tabindex="-1"></a><span class="do">## [124] assertthat_0.2.1         rjson_0.2.21             withr_2.5.0             </span></span>
+<span id="cb33-70"><a href="#cb33-70" aria-hidden="true" tabindex="-1"></a><span class="do">## [127] multcomp_1.4-20          parallel_4.2.0           hms_1.1.2               </span></span>
+<span id="cb33-71"><a href="#cb33-71" aria-hidden="true" tabindex="-1"></a><span class="do">## [130] coda_0.19-4              class_7.3-20             minqa_1.2.4             </span></span>
+<span id="cb33-72"><a href="#cb33-72" aria-hidden="true" tabindex="-1"></a><span class="do">## [133] rmarkdown_2.16           carData_3.0-5            googledrive_2.0.0       </span></span>
+<span id="cb33-73"><a href="#cb33-73" aria-hidden="true" tabindex="-1"></a><span class="do">## [136] ggpubr_0.4.0             sf_1.0-8                 ggforce_0.4.1           </span></span>
+<span id="cb33-74"><a href="#cb33-74" aria-hidden="true" tabindex="-1"></a><span class="do">## [139] numDeriv_2016.8-1.1      scatterplot3d_0.3-42     lubridate_1.8.0</span></span></code></pre></div>
 </div>
 </div>
 
