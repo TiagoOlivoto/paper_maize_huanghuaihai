@@ -82,9 +82,9 @@ cc1 <-
 
 
 cc2 <- 
-expand_grid(location = c("Shenzhou", "Gaocheng", "Handan"),
-            year = c(2019, 2020),
-            type = c("NASA/POWER", "Observed")) |> 
+  expand_grid(location = c("Shenzhou", "Gaocheng", "Handan"),
+              year = c(2019, 2020),
+              type = c("NASA/POWER", "Observed")) |> 
   mutate(prec = c(331, 220.2, 508, 332, 336,  218,  528, 398, 319, 201,  511, 394)) |> 
   ggplot(aes(location, prec, fill = type)) +
   geom_bar(stat = "identity", position = position_dodge()) +
@@ -342,7 +342,7 @@ out |>
 
 
 # Figure S7 {-}
-```{r  fig.width=12, fig.cap="Phenotypic correlation between the studied traits within ME1 (A), ME2 (B), and ME3 (C), and ME4 (D).", echo=FALSE}
+```{r  fig.width=12, fig.height=6, fig.cap="Phenotypic correlation between the studied traits within ME1 (A), ME2 (B), and ME3 (C), and ME4 (D).", echo=FALSE}
 
 mgidi_mod <- readRDS("data/mgidi.Rdata")
 c1 <- mgidi_mod$mgidi[[1]]$cormat
@@ -351,22 +351,22 @@ c3 <- mgidi_mod$mgidi[[3]]$cormat
 c4 <- mgidi_mod$mgidi[[4]]$cormat
 
 
-corM1p <- 
+corM1p <-
   c1 |>
   network_plot(legend_position = "bottom",
-               min_cor = 0.3)
+               min_cor = 0)
 corM2p <- 
   c2 |>
   network_plot(legend_position = "bottom",
-               min_cor = 0.3)
+               min_cor = 0)
 corM3p <- 
   c3 |>
   network_plot(legend_position = "bottom",
-               min_cor = 0.3)
+               min_cor = 0)
 corM4p <- 
   c4 |>
   network_plot(legend_position = "bottom",
-               min_cor = 0.3)
+               min_cor = 0)
 
 
 arrange_ggplot(corM1p, corM2p, corM3p, corM4p,
@@ -388,9 +388,7 @@ pairs_mantel(as.lpcor(c1, c2, c3, c4),
 
 
 
-# Figure S9 {- .panelset}
-
-## ME1  {-}
+# Figure S9  {-}
 
 ```{r fig.width=10, fig.height=6, fig.cap="Average value for the studied trait across ME1", echo=FALSE}
 ME1 <- mgidi_mod$mgidi[[1]]$sel_gen
@@ -427,7 +425,7 @@ ggplot(mean_me1, aes(value, GEN)) +
 ```
 
 
-## ME2  {-}
+# Figure S10 {-}
 
 ```{r fig.width=10, fig.height=6, fig.cap="Average value for the studied trait across ME2", echo=FALSE}
 mean_me2 <- 
@@ -459,7 +457,7 @@ ggplot(mean_me2, aes(value, GEN)) +
 ```
 
 
-## ME3  {-}
+# Figure S11 {-}
 
 ```{r fig.width=10, fig.height=6, fig.cap="Average value for the studied trait across ME3", echo=FALSE}
 mean_me3 <- 
@@ -490,7 +488,7 @@ ggplot(mean_me3, aes(value, GEN)) +
   my_theme
 ```
 
-## ME4  {-}
+# Figure S12 {-}
 
 ```{r fig.width=10, fig.height=6, fig.cap="Average value for the studied trait across ME4", echo=FALSE}
 mean_me4 <- 
@@ -523,7 +521,7 @@ ggplot(mean_me4, aes(value, GEN)) +
 
 
 
-# Figure S10  {-}
+# Figure S13 {-}
 ```{r fig.width=12, fig.height=8, echo=FALSE, fig.cap="Heatmap showing the average yield of the studied genotypes in each combination of mega-environment and year"}
 df_traits |> 
   concatenate(ME, YEAR, new_var = ENV) |> 
@@ -532,14 +530,14 @@ df_traits |>
 ```
 
 
-# Figure S11  {-}
+# Figure S14 {-}
 ```{r fig.width=12, fig.height=6, echo=FALSE, fig.cap="Heatmap showing the average yield of the studied genotypes in each mega-environment"}
 ge_plot(df_traits, ME, GEN, GY,
         order_g = paste0("G", 1:26))
 ```
 
 
-# Figure S12  {-}
+# Figure S15 {-}
 ```{r echo=FALSE,fig.cap="Quantiles for maximum air temperature (A), maximum air temperature (B), relative humidity (C), and rainfall precipitation (D) observed in the studied mega-environments across distinct crop stages and cultivation years.", fig.width=13, fig.height=10}
 env_data_trial <- import("data/env_data_trial.xlsx")
 
@@ -689,7 +687,7 @@ arrange_ggplot(p4, p3, p5, p6,
 
 
 
-# Figure S13  {-}
+# Figure S16 {-}
 ```{r echo=FALSE, fig.width=10, fig.height=6, echo=FALSE, fig.cap="Relationhips between accumulated rainfall precipitation and grain yield. The different colors shows the mega-environments and the different shapes, the cultivation year."}
 df_gymey <- 
   df_traits |> 
@@ -717,6 +715,74 @@ ggplot(df_prec, aes(PRECTOT, GY)) +
   labs(x = "Acumulated amount of rain during the experiment (mm)",
        y = expression(Average~yield~(Mg~ha^{-1}))) +
   my_theme
+
+```
+
+# Figure S17 {-}
+```{r echo=FALSE, fig.width=12, fig.height=10, echo=FALSE, fig.cap="Ranks of 26 maize hybrids considering different weights for stability computed as the Wricke’s Ecovalence (Wi) and grain yielding (GY). The most-left ranks were obtained considering the stability only. The most right-ranks were obtained considering the grain yield only. Between the extremes, the ranks were obtained different weights for stability and yielding."}
+
+scenarios <- readRDS("data/scenarios.RData")
+
+me1 <- scenarios$scenarios[[1]]$GY$hetcomb |> apply(2, function(x){rank(-x)})
+me2 <- scenarios$scenarios[[2]]$GY$hetcomb |> apply(2, function(x){rank(-x)})
+me3 <- scenarios$scenarios[[3]]$GY$hetcomb |> apply(2, function(x){rank(-x)})
+me4 <- scenarios$scenarios[[4]]$GY$hetcomb |> apply(2, function(x){rank(-x)})
+
+plot_heat <- function(dat){
+  grps <-
+    dist(dat) %>%
+    hclust() %>%
+    cutree(4) %>%
+    as.data.frame() %>%
+    rownames_to_column("GEN") %>%
+    set_names("GEN", "GROUP") %>%
+    arrange(GROUP) %>%
+    add_cols(color =
+               case_when(GROUP == 1 ~ "green",
+                         GROUP == 2 ~ "red",
+                         GROUP == 3 ~ "blue",
+                         GROUP == 4 ~ "black"))
+  data <-
+    dat %>%
+    as.data.frame() |> 
+    rownames_to_column("GEN") %>%
+    metan::as_factor(1) %>%
+    pivot_longer(-GEN) %>%
+    add_row_id()
+  
+
+  ggplot(data, aes(reorder(name, row_id), factor(GEN, levels = grps$GEN), fill= value)) +
+    geom_raster() +
+    theme_metan() +
+    theme(legend.position = "right")+
+    scale_y_discrete(expand = expansion(mult = c(0,0)))+
+    scale_x_discrete(expand = expansion(mult = c(0,0)))+
+    scale_fill_viridis_c() +
+    guides(fill = guide_colourbar(label = TRUE,
+                                  draw.ulim = TRUE,
+                                  draw.llim = TRUE,
+                                  frame.colour = "black",
+                                  ticks = TRUE,
+                                  nbin = 10,
+                                  label.position = "right",
+                                  barwidth = 1.3,
+                                  barheight = 10,
+                                  direction = 'vertical'))+
+    theme(axis.text.x = element_text(size = 12, angle = 90, hjust = 1, vjust = 0.5))+
+    theme(axis.text.y = element_text(size = 12, colour = grps$color),
+          axis.title = element_text(size = 12)) +
+    labs(x = "Wi/GY ratio",
+         y = "Genotypes")
+}
+
+
+p1 <- plot_heat(me1)
+p2 <- plot_heat(me2)
+p3 <- plot_heat(me3)
+p4 <- plot_heat(me4)
+
+arrange_ggplot(p1, p2, p3, p4,
+               tag_levels = "A")
 
 ```
 

@@ -234,8 +234,7 @@ env_wider <-
          DOY = 1,
          YYYYMMDD = 1,
          YEAR = 1,
-         .after = env) |> 
-  left_join(df_gy_loc, by = c("env" = "LOC"))
+         .after = env)
 
 saveRDS(env_wider, "data/env_wider.Rdata")
 ```
@@ -282,10 +281,10 @@ d <-
             padding = 0.5,
             legend.height=0.2)
 
-# ggsave(filename = "figs/fig2_heat_env2.pdf",
-#        plot = d$plot,
-#        width = 11,
-#        height = 10)
+ggsave(filename = "figs/fig2_heat_env2.pdf",
+       plot = d$plot,
+       width = 11,
+       height = 10)
 
 
 env_data <- 
@@ -672,15 +671,17 @@ get_lrt <- function(model){
 ```
 
 
+
 # Models
 
 ```{r}
-
 # fitted models
 mod <- 
   df_traits_long |> 
   group_by(name) |> 
-  doo(~ lmer(value ~ (1|ME) +   (1|GEN) + (1|GEN:YEAR) + (1|GEN:ME) + (1|GEN:ME:YEAR) + (1|YEAR/ME/REP2),
+  select(-REP) |> 
+  rename(REP = REP2) |> 
+  doo(~ lmer(value ~ (1|ME) +   (1|GEN) + (1|GEN:YEAR) + (1|GEN:ME) + (1|GEN:ME:YEAR) + (1|YEAR/ME/REP),
              data = .))
 
 ```
@@ -712,15 +713,16 @@ vcomp <-
   mutate(vcomp = map(data, ~.x |> get_vcomp())) |> 
   dplyr::select(-data) |> 
   unnest(vcomp) |> 
-  mutate(group = fct_relevel(group, "YEAR", "ME", "ME:YEAR", "GEN", "GEN:YEAR", "GEN:ME", "GEN:ME:YEAR", "REP2:(ME:YEAR)", "Residual"))
+  mutate(group = fct_relevel(group, "YEAR", "ME", "ME:YEAR", "GEN", "GEN:YEAR", "GEN:ME", "GEN:ME:YEAR", "REP:(ME:YEAR)", "Residual"))
 
 vcomp_wide <- 
   vcomp |> 
-  pivot_wider(names_from = name, values_from = variance) |>
-  rowwise() |> 
-  mutate(d =  summarise(across(2:10, sum)))
+  pivot_wider(names_from = name, values_from = variance)
 
-ggplot(vcomp, aes(name, variance, fill = group)) +
+export(vcomp_wide, "data/vcomp_wide.xlsx")
+
+p1 <- 
+  ggplot(vcomp, aes(name, variance, fill = group)) +
   geom_bar(stat = "identity",
            position = "fill",
            color = "white",
@@ -732,9 +734,36 @@ ggplot(vcomp, aes(name, variance, fill = group)) +
                      labels = scales::label_percent()) +
   ggthemes::scale_fill_stata() +
   labs(x = "Traits",
-       y = "Percentage of the total Variance (%)",
+       y = "Percentage of the variance of phenotypic mean values (%)",
        fill = "Source")
-ggsave("figs/fig5_vcomp.jpeg", width = 6, height = 5)
+
+
+
+
+vcomp_mean <- 
+  import("data/h_mean.xlsx") |> 
+  pivot_longer(-group)
+
+p2 <-
+  ggplot(vcomp_mean, aes(name, value, fill = group)) +
+  geom_bar(stat = "identity",
+           position = "fill",
+           color = "white",
+           width = 1) +
+  my_theme +
+  theme(legend.position = "right") + 
+  scale_x_discrete(expand = expansion(0)) +
+  scale_y_continuous(expand = expansion(0),
+                     labels = scales::label_percent()) +
+  ggthemes::scale_fill_stata() +
+  labs(x = "Traits",
+       y = "Percentage of the variance of a genotype mean (%)",
+       fill = "Source")
+
+
+arrange_ggplot(p1, p2, 
+               tag_levels = "A")
+ggsave("figs/fig5_vcomp.jpeg", width = 10, height = 4)
 
 ```
 
@@ -759,6 +788,16 @@ waas <-
            stability = "ecovalence"))
 
 ```
+
+## Scenarios varying the weight for mean performance and stability
+```{r}
+scenarios <- 
+  waas %>% 
+  mutate(scenarios = map(data, ~.x %>% wsmp))
+
+saveRDS(scenarios, "data/scenarios.RData")
+```
+
 
 ## Join the WAASBY for all traits
 ```{r}
@@ -845,6 +884,8 @@ ds_mper <-
            TRUE ~ "Positive desired gains"
          ),
          negative = ifelse(sd_perc <= 0, "Negative", "Positive"))
+
+
 
 ggplot(ds_mper, aes(name, sd_perc)) +
   geom_hline(yintercept = 0, size = 0.2) +
